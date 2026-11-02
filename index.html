@@ -19,16 +19,17 @@
 @font-face{font-family:Ping;src:url('assets/fonts/alfont_com_PingARLT-Medium.otf') format('opentype');font-weight:500;font-display:swap}
 @font-face{font-family:Ping;src:url('assets/fonts/alfont_com_PingARLT-Bold.otf') format('opentype');font-weight:700;font-display:swap}
 
-/* Layout: a cinematic dark scroll — giant poster hero, then full-bleed bands on a 12-col grid, red used only for emphasis words, numbers and the timeline spine. */
+/* Layout: a cinematic dark scroll — giant poster hero, then full-bleed bands on a 12-col grid, fluorescent lime used only for emphasis words, numbers and the timeline spine. */
 :root{
   --ink:#07080d;          /* page */
   --panel:#0e1019;        /* raised bands */
   --line:#1c1f2e;         /* hairlines */
   --text:#eef0f6;
   --muted:#8b90a5;
-  --red:#ec2340;
-  --red-hot:#ff3a55;
-  --red-deep:#5c0a17;
+  --acc:#ccff00;
+  --acc-hot:#e4ff5c;
+  --acc-deep:#3f5200;
+  --on-acc:#0b0d05;       /* text on the fluorescent accent */
   --blue:#96b4e6;         /* blueprint lines */
   --fig:#0d99ff;          /* editor selection blue for the build crew */
   --display-en:"Anton","Alexandria",Impact,"Arial Narrow",sans-serif;
@@ -49,13 +50,13 @@ html[lang=ar] .en,html[lang=en] .ar{display:none!important}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
-:focus-visible{outline:2px solid var(--red-hot);outline-offset:3px}
+:focus-visible{outline:2px solid var(--acc-hot);outline-offset:3px}
 .wrap{width:min(100%,1320px);margin-inline:auto;padding-left:var(--gut);padding-right:var(--gut-r)}
 .display{font-family:var(--display-ar);font-weight:900;line-height:1.02;letter-spacing:-.01em;text-wrap:balance;margin:0}
 html[lang=en] .display{font-family:var(--display-en);font-weight:400;text-transform:uppercase;letter-spacing:.005em;line-height:.95}
-.red{color:var(--red)}
+.hi{color:var(--acc)}
 .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;align-items:center;margin:0 0 18px}
-.eyebrow b{color:var(--red);font-weight:700}
+.eyebrow b{color:var(--acc);font-weight:700}
 html[lang=ar] .eyebrow{letter-spacing:0;font-size:13px}
 .num{font-family:var(--display-en);font-variant-numeric:tabular-nums;letter-spacing:.01em}
 
@@ -64,34 +65,34 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--ink) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:24px;height:64px}
 .logo{font-family:var(--display-en);font-size:22px;letter-spacing:.02em;display:flex;align-items:center;gap:6px;direction:ltr}
-.logo i{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block;box-shadow:0 0 12px var(--red)}
+.logo i{width:8px;height:8px;border-radius:50%;background:var(--acc);display:inline-block;box-shadow:0 0 12px var(--acc)}
 .nav{display:flex;gap:26px;margin-inline-start:auto;font-size:14px;color:var(--muted)}
 .nav a{transition:color .2s}.nav a:hover{color:var(--text)}
 .top-tools{display:flex;gap:10px;align-items:center}
 .lang{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;color:var(--muted);transition:border-color .2s,color .2s}
 .lang:hover{border-color:var(--muted);color:var(--text)}
 .talk{font-size:13px;font-weight:700;background:var(--text);color:var(--ink);border-radius:999px;padding:8px 16px;display:inline-flex;gap:6px;align-items:center}
-.talk:hover{background:var(--red);color:#fff}
+.talk:hover{background:var(--acc);color:var(--on-acc)}
 
 /* ---------- hero ---------- */
 .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);isolation:isolate}
-.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(60% 70% at 50% 35%,rgba(236,35,64,.18),transparent 70%),radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 1.4px) 0 0/28px 28px}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(60% 70% at 50% 35%,rgba(204,255,0,.12),transparent 70%),radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 1.4px) 0 0/28px 28px}
 .hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,.5fr);align-items:end;min-height:min(820px,calc(100svh - 64px));padding-block:40px 36px;gap:24px}
 .giant{position:absolute;inset-inline:0;top:5%;z-index:-1;text-align:center;font-family:var(--display-en);font-size:clamp(110px,23.5vw,360px);line-height:.82;letter-spacing:-.01em;direction:ltr;white-space:nowrap;
-  background:linear-gradient(180deg,var(--red-hot) 0%,var(--red) 38%,var(--red-deep) 78%,transparent 100%);-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;pointer-events:none;will-change:transform}
+  background:linear-gradient(180deg,var(--acc-hot) 0%,var(--acc) 38%,var(--acc-deep) 78%,transparent 100%);-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;pointer-events:none;will-change:transform}
 .portrait{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,48vw);z-index:0;pointer-events:none}
 .portrait img{width:100%;height:auto;filter:contrast(1.08) brightness(.95);-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 72%,transparent 100%)}
 .hero-copy{position:relative;z-index:2;align-self:end;padding-top:clamp(140px,17vw,250px);max-width:420px}
 .hello{font-family:var(--script-ar);font-size:clamp(30px,3.4vw,46px);color:var(--text);line-height:1;margin:0 0 6px;transform:rotate(-4deg);transform-origin:right}
 html[lang=en] .hello{font-family:var(--script-en);transform-origin:left}
 .name{font-size:clamp(48px,6.2vw,92px)}
-.name .dot{color:var(--red)}
-.role{font-family:var(--display-ar);font-weight:800;color:var(--red);font-size:clamp(17px,1.6vw,22px);line-height:1.25;margin:14px 0 16px}
+.name .dot{color:var(--acc)}
+.role{font-family:var(--display-ar);font-weight:800;color:var(--acc);font-size:clamp(17px,1.6vw,22px);line-height:1.25;margin:14px 0 16px}
 html[lang=en] .role{font-family:var(--display-en);font-weight:400;text-transform:uppercase;letter-spacing:.02em}
 .lede{color:#c4c8d6;margin:0 0 22px;font-size:15px;max-width:44ch}
 .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:14px;padding:13px 20px;background:var(--red);color:#fff;border-radius:2px;transition:background .2s,transform .2s}
-.btn:hover{background:var(--red-hot);transform:translateY(-2px)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:14px;padding:13px 20px;background:var(--acc);color:var(--on-acc);border-radius:2px;transition:background .2s,transform .2s}
+.btn:hover{background:var(--acc-hot);color:var(--on-acc);transform:translateY(-2px)}
 .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
 .btn.ghost:hover{border-color:var(--text)}
 .loc{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);margin-top:20px}
@@ -100,11 +101,11 @@ html[lang=en] .role{font-family:var(--display-en);font-weight:400;text-transform
 .stats{grid-column:3;position:relative;z-index:2;display:grid;gap:22px;align-self:end;padding-bottom:60px;justify-items:end}
 html[lang=ar] .stats{justify-items:start}
 .stat{display:grid;grid-template-columns:auto auto;align-items:center;gap:12px}
-.stat strong{direction:ltr;unicode-bidi:isolate;font-family:var(--display-en);font-weight:400;font-size:clamp(40px,4vw,58px);line-height:.9;color:var(--red);font-variant-numeric:tabular-nums}
+.stat strong{direction:ltr;unicode-bidi:isolate;font-family:var(--display-en);font-weight:400;font-size:clamp(40px,4vw,58px);line-height:.9;color:var(--acc);font-variant-numeric:tabular-nums}
 .stat span{font-size:12px;color:var(--muted);line-height:1.35;max-width:9ch}
 .scroll-hint{position:absolute;bottom:22px;inset-inline-start:50%;translate:-50% 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px}
 html[dir=rtl] .scroll-hint{translate:50% 0}
-.scroll-hint::after{content:"";width:1px;height:28px;background:linear-gradient(var(--red),transparent);animation:drip 1.8s infinite}
+.scroll-hint::after{content:"";width:1px;height:28px;background:linear-gradient(var(--acc),transparent);animation:drip 1.8s infinite}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 .corner{position:absolute;top:28px;inset-inline-end:var(--gut);font-size:11px;color:var(--muted);text-align:end;line-height:1.5;z-index:3;letter-spacing:.06em;text-transform:uppercase}
 
@@ -119,14 +120,14 @@ section{position:relative}
 .band{padding-block:clamp(64px,8vw,104px);border-bottom:1px solid var(--line)}
 .sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
 .sec-head h2{font-size:clamp(34px,4.4vw,60px)}
-.sec-head p{color:var(--muted);max-width:40ch;margin:0;font-size:15px}
+.sec-head p.sub{color:var(--muted);max-width:46ch;margin:16px 0 0;font-size:15px}
 .arrows{display:flex;gap:8px}
 .arrows button{width:42px;height:42px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:border-color .2s,background .2s}
-.arrows button:hover{border-color:var(--red);background:var(--red)}
+.arrows button:hover{border-color:var(--acc);background:var(--acc);color:var(--on-acc)}
 html[dir=rtl] .arrows svg{transform:scaleX(-1)}
 
 /* work rail */
-.rail{display:grid;grid-auto-flow:column;grid-auto-columns:min(78vw,420px);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:18px;scrollbar-width:thin;scrollbar-color:var(--red) var(--line);overscroll-behavior-x:contain}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:min(78vw,420px);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:18px;scrollbar-width:thin;scrollbar-color:var(--acc) var(--line);overscroll-behavior-x:contain}
 .card{scroll-snap-align:start;display:grid;gap:14px;text-align:start}
 .card .shot{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
 .card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1),filter .4s;filter:saturate(.9)}
@@ -134,11 +135,11 @@ html[dir=rtl] .arrows svg{transform:scaleX(-1)}
 .card .shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(7,8,13,.75));opacity:0;transition:opacity .3s}
 .card:hover .shot::after{opacity:1}
 .card .meta{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:start}
-.card .idx{font-family:var(--display-en);color:var(--red);font-size:30px;line-height:1}
+.card .idx{font-family:var(--display-en);color:var(--acc);font-size:30px;line-height:1}
 .card h3{margin:0;font-size:16px;line-height:1.3;font-weight:700}
 .card small{color:var(--muted);font-size:12.5px}
 .card .go{width:30px;height:30px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:.25s}
-.card:hover .go{background:var(--red);border-color:var(--red);transform:rotate(-45deg)}
+.card:hover .go{background:var(--acc);border-color:var(--acc);color:var(--on-acc);transform:rotate(-45deg)}
 html[dir=rtl] .card:hover .go{transform:rotate(45deg) scaleX(-1)}
 html[dir=rtl] .card .go svg{transform:scaleX(-1)}
 
@@ -151,27 +152,28 @@ html[lang=ar] .part .label{letter-spacing:0;font-size:13px}
 .track{display:flex;gap:64px;width:max-content;animation:slide 32s linear infinite}
 .marquee:hover .track{animation-play-state:paused}
 .co{font-family:var(--display-en);font-size:30px;letter-spacing:.03em;color:#cfd2dd;white-space:nowrap;display:flex;align-items:center;gap:64px;opacity:.85}
-.co::after{content:"✦";color:var(--red);font-size:14px}
+.co::after{content:"✦";color:var(--acc);font-size:14px}
 @keyframes slide{to{transform:translateX(-50%)}}
 
 /* impact */
-.impact{background:linear-gradient(180deg,var(--ink),#0b0610 60%,var(--ink))}
+.impact{background:linear-gradient(180deg,var(--ink),#0b0d06 60%,var(--ink))}
 .impact .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,6vw,96px);align-items:start}
 .impact h2{font-size:clamp(46px,6.4vw,96px)}
 .laurel{display:flex;align-items:center;gap:6px;margin:34px 0 10px;direction:ltr}
-.laurel svg{width:46px;height:84px;color:var(--red)}
+.laurel svg{width:46px;height:84px;color:var(--acc)}
 .laurel strong{font-family:var(--display-en);font-weight:400;font-size:clamp(84px,9vw,128px);line-height:.85}
-.laurel strong sup{font-size:.4em;color:var(--red);vertical-align:top}
-.impact .under{font-family:var(--display-en);color:var(--red);letter-spacing:.14em;font-size:13px;margin:0 0 14px}
+.laurel strong sup{font-size:.4em;color:var(--acc);vertical-align:top}
+.impact .under{font-family:var(--display-en);color:var(--acc);letter-spacing:.14em;font-size:13px;margin:0 0 14px;text-transform:uppercase}
+html[lang=ar] .impact .under{font-family:var(--display-ar);font-weight:800;letter-spacing:0;font-size:16px}
 .impact p.desc{color:var(--muted);max-width:40ch;margin:0}
 .list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .list li{display:grid;grid-template-columns:44px 1fr auto;gap:16px;align-items:center;padding:20px 4px;border-bottom:1px solid var(--line);transition:background .25s,padding .25s}
-.list li:hover{background:linear-gradient(90deg,rgba(236,35,64,.08),transparent);padding-inline-start:14px}
-html[dir=rtl] .list li:hover{background:linear-gradient(-90deg,rgba(236,35,64,.08),transparent)}
+.list li:hover{background:linear-gradient(90deg,rgba(204,255,0,.07),transparent);padding-inline-start:14px}
+html[dir=rtl] .list li:hover{background:linear-gradient(-90deg,rgba(204,255,0,.07),transparent)}
 .list .i{font-family:var(--display-en);color:var(--muted);font-size:13px}
 .list h4{margin:0;font-size:17px;line-height:1.3}
 .list small{display:block;color:var(--muted);font-size:13px;font-weight:400}
-.list .tag{font-family:var(--display-en);color:var(--red);font-size:clamp(16px,1.6vw,22px);text-align:end;white-space:nowrap}
+.list .tag{font-family:var(--display-en);color:var(--acc);font-size:clamp(16px,1.6vw,22px);text-align:end;white-space:nowrap}
 
 /* raw to real */
 .raw .wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:clamp(28px,5vw,72px);align-items:center}
@@ -180,8 +182,8 @@ html[dir=rtl] .list li:hover{background:linear-gradient(-90deg,rgba(236,35,64,.0
 .compare{position:relative;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--line);background:var(--panel);--pos:52%;touch-action:pan-y;user-select:none;max-width:100%}
 .compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 .compare .after{clip-path:inset(0 0 0 var(--pos))}
-.compare .handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:var(--red);translate:-1px 0}
-.compare .knob{position:absolute;top:50%;left:50%;translate:-50% -50%;width:44px;height:44px;border-radius:50%;background:var(--red);display:grid;place-items:center;box-shadow:0 0 0 6px rgba(236,35,64,.25)}
+.compare .handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:var(--acc);translate:-1px 0}
+.compare .knob{position:absolute;top:50%;left:50%;translate:-50% -50%;width:44px;height:44px;border-radius:50%;background:var(--acc);display:grid;place-items:center;box-shadow:0 0 0 6px rgba(204,255,0,.25)}
 .compare .tagl,.compare .tagr{position:absolute;top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:rgba(7,8,13,.75);padding:5px 10px;border:1px solid var(--line)}
 .compare .tagl{left:14px;color:var(--blue)}.compare .tagr{right:14px}
 .compare input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
@@ -196,19 +198,19 @@ html[dir=rtl] .list li:hover{background:linear-gradient(-90deg,rgba(236,35,64,.0
 html[lang=ar] .blk h3{letter-spacing:0;font-size:15px}
 .edu{display:grid;gap:22px}
 .edu div{border-top:1px solid var(--line);padding-top:14px}
-.edu b{display:block;color:var(--red);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.edu b{display:block;color:var(--acc);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
 .edu p{margin:0;color:#c4c8d6;font-size:14.5px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
 .chips span{font-size:12.5px;border:1px solid var(--line);padding:6px 11px;border-radius:999px;color:#c4c8d6;direction:ltr}
 .steps{list-style:none;margin:0;padding:0;position:relative}
-.steps::before{content:"";position:absolute;inset-inline-start:48px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--red),var(--line))}
+.steps::before{content:"";position:absolute;inset-inline-start:48px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--acc),var(--line))}
 .steps li{display:grid;grid-template-columns:34px 30px 1fr;gap:0;align-items:start;padding-bottom:26px}
-.steps .n{font-family:var(--display-en);color:var(--red);font-size:20px;line-height:1.2}
-.steps .pin{width:9px;height:9px;border-radius:50%;border:2px solid var(--red);background:var(--ink);margin-top:7px;margin-inline-start:10px;position:relative;z-index:1}
+.steps .n{font-family:var(--display-en);color:var(--acc);font-size:20px;line-height:1.2}
+.steps .pin{width:9px;height:9px;border-radius:50%;border:2px solid var(--acc);background:var(--ink);margin-top:7px;margin-inline-start:10px;position:relative;z-index:1}
 .steps h4{margin:0 0 4px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
 html[lang=ar] .steps h4{letter-spacing:0;font-size:16px}
 .steps p{margin:0;color:var(--muted);font-size:14px}
-.quote{background:linear-gradient(160deg,var(--red),#a70f26);padding:28px 26px 24px;position:relative;overflow:hidden}
+.quote{background:linear-gradient(160deg,var(--acc-hot),var(--acc) 55%,#9fd100);color:var(--on-acc);padding:28px 26px 24px;position:relative;overflow:hidden}
 .quote::before{content:"\201C";font-family:Georgia,serif;font-size:90px;line-height:.6;display:block;opacity:.6;margin-bottom:10px}
 .quote p{margin:0 0 22px;font-size:clamp(19px,1.8vw,24px);line-height:1.4;font-weight:500}
 .quote cite{font-family:var(--script-ar);font-style:normal;font-size:26px;opacity:.95}
@@ -217,7 +219,7 @@ html[lang=en] .quote cite{font-family:var(--script-en)}
 /* journey */
 .journey .wrap{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr);gap:clamp(32px,6vw,80px)}
 .journey h2{font-size:clamp(38px,5vw,74px);margin-bottom:12px}
-.timeline{position:relative;margin-top:44px;border-inline-start:2px solid var(--red)}
+.timeline{position:relative;margin-top:44px;border-inline-start:2px solid var(--acc)}
 .job{border-bottom:1px solid var(--line)}
 .job>button{width:100%;display:grid;grid-template-columns:150px 1fr 36px;gap:18px;align-items:center;text-align:start;padding:22px 0 22px 22px}
 html[dir=rtl] .job>button{padding:22px 22px 22px 0}
@@ -225,13 +227,13 @@ html[dir=rtl] .job>button{padding:22px 22px 22px 0}
 .job h3{margin:0;font-size:clamp(18px,1.8vw,23px);line-height:1.25}
 .job h3 small{display:block;font-size:13.5px;color:var(--muted);font-weight:400;margin-top:2px}
 .plus{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:transform .3s,background .3s,border-color .3s}
-.job[open] .plus,.job.open .plus{transform:rotate(45deg);background:var(--red);border-color:var(--red)}
+.job[open] .plus,.job.open .plus{transform:rotate(45deg);background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
 .job .body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)}
 .job.open .body{grid-template-rows:1fr}
 .job .body>div{overflow:hidden}
 .job ul{margin:0;padding:0 22px 24px 190px;color:#c4c8d6;font-size:14.5px;display:grid;gap:8px}
 html[dir=rtl] .job ul{padding:0 190px 24px 22px}
-.job li::marker{color:var(--red)}
+.job li::marker{color:var(--acc)}
 .side .tools{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:4px}
 .side .tools span{aspect-ratio:1;border:1px solid var(--line);display:grid;place-items:center;background:var(--panel)}
 .side .tools img{width:46%}
@@ -247,21 +249,21 @@ html[dir=rtl] .job ul{padding:0 190px 24px 22px}
 .ways{list-style:none;margin:0;padding:0;display:grid}
 .ways li{border-bottom:1px solid var(--line)}
 .ways a,.ways div.row{display:grid;grid-template-columns:38px 1fr auto;gap:14px;align-items:center;padding:16px 0}
-.ways .ic{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--red)}
+.ways .ic{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--acc)}
 .ways small{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 html[lang=ar] .ways small{letter-spacing:0;font-size:12.5px}
 .ways b{font-weight:500;font-size:15px;direction:ltr;display:inline-block;unicode-bidi:isolate}
 .ways .arr{color:var(--muted);transition:transform .25s,color .25s}
-.ways a:hover .arr{color:var(--red);transform:translate(4px,-4px)}
+.ways a:hover .arr{color:var(--acc);transform:translate(4px,-4px)}
 html[dir=rtl] .ways .arr{transform:scaleX(-1)}
 html[dir=rtl] .ways a:hover .arr{transform:scaleX(-1) translate(4px,-4px)}
 .copy{font-size:11px;border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--muted)}
 .copy:hover{color:var(--text);border-color:var(--muted)}
-.poster{position:relative;aspect-ratio:4/5;border:1px solid var(--line);background:radial-gradient(80% 60% at 70% 20%,rgba(236,35,64,.22),transparent 70%),var(--panel);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:26px;max-width:100%}
+.poster{position:relative;aspect-ratio:4/5;border:1px solid var(--line);background:radial-gradient(80% 60% at 70% 20%,rgba(204,255,0,.16),transparent 70%),var(--panel);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:26px;max-width:100%}
 .poster canvas{position:absolute;inset:0;width:100%;height:100%}
 .poster .display{position:relative;font-size:clamp(40px,4.4vw,64px)}
 .poster .rec{position:absolute;top:18px;inset-inline-start:20px;font-size:11px;letter-spacing:.16em;color:var(--muted);display:flex;gap:8px;align-items:center;text-transform:uppercase}
-.poster .rec i{width:7px;height:7px;border-radius:50%;background:var(--red);animation:blink 1.2s steps(2) infinite}
+.poster .rec i{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:blink 1.2s steps(2) infinite}
 @keyframes blink{50%{opacity:0}}
 
 footer{padding-block:28px}
@@ -276,7 +278,7 @@ dialog.lb::backdrop{background:rgba(4,5,9,.9);backdrop-filter:blur(6px)}
 .lb figcaption{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 18px}
 .lb figcaption b{font-size:17px}.lb figcaption small{display:block;color:var(--muted)}
 .lb .x{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;font-size:20px;flex:none}
-.lb .x:hover{background:var(--red);border-color:var(--red)}
+.lb .x:hover{background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
 
 /* ---------- live build: a crew of agent cursors assembles each section as it scrolls in ---------- */
 html.build:not(.ready) .top .wrap,html.build:not(.ready) main,html.build:not(.ready) footer{visibility:hidden}
@@ -294,7 +296,7 @@ html.build .bw{opacity:0!important;pointer-events:none}
 .ag svg{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55));transform-origin:2px 2px}
 .ag.click svg{animation:clk .28s}
 @keyframes clk{40%{transform:scale(.75)}}
-.ag b{position:absolute;left:13px;top:17px;font-size:10.5px;font-weight:700;line-height:1;color:#fff;background:var(--c);padding:4px 7px 5px;border-radius:2px 8px 8px 8px;white-space:nowrap}
+.ag b{position:absolute;left:13px;top:17px;font-size:10.5px;font-weight:700;line-height:1;color:var(--t,#fff);background:var(--c);padding:4px 7px 5px;border-radius:2px 8px 8px 8px;white-space:nowrap}
 .ag .chip{position:absolute;left:13px;top:38px;font-size:10.5px;line-height:1;background:#fff;color:#111;padding:5px 7px;border-radius:4px;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.4)}
 .fr{position:absolute;border:1.5px solid var(--fig);transition:opacity .35s}
 .fr.ph{background:rgba(13,153,255,.12)}
@@ -412,7 +414,8 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     <div class="sec-head">
       <div>
         <p class="eyebrow"><b>01</b> / <span class="ar">أعمال مختارة</span><span class="en">Selected work</span></p>
-        <h2 class="display"><span class="ar">أعمال <span class="red">تتكلم.</span></span><span class="en">Work that <span class="red">speaks.</span></span></h2>
+        <h2 class="display"><span class="ar">أعمال <span class="hi">تتكلم.</span></span><span class="en">Work that <span class="hi">speaks.</span></span></h2>
+        <p class="sub"><span class="ar">مختارات من أنظمة ولوحات تحكم وتطبيقات ومواقع صممتها، من الفكرة للواجهة النهائية.</span><span class="en">A selection of systems, dashboards, apps and websites I've designed, from first idea to final UI.</span></p>
       </div>
       <div class="arrows">
         <button type="button" id="prev" aria-label="Previous"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -428,8 +431,8 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   <div class="wrap">
     <p class="label"><span class="ar">كنت جزءًا من<br>الصورة الأكبر</span><span class="en">Been part of<br>the bigger picture</span></p>
     <div class="marquee"><div class="track">
-      <span class="co">WAKEB DATA</span><span class="co">TOQ</span><span class="co">RGB GROUP</span><span class="co">DR.CODE</span><span class="co">ERP · POS · SAAS</span><span class="co">DESIGN SYSTEMS</span>
-      <span class="co" aria-hidden="true">WAKEB DATA</span><span class="co" aria-hidden="true">TOQ</span><span class="co" aria-hidden="true">RGB GROUP</span><span class="co" aria-hidden="true">DR.CODE</span><span class="co" aria-hidden="true">ERP · POS · SAAS</span><span class="co" aria-hidden="true">DESIGN SYSTEMS</span>
+      <span class="co">WAKEB DATA</span><span class="co">TOQ</span><span class="co">RGB GROUP</span><span class="co">DR.CODE</span><span class="co">WAKEB DATA</span><span class="co">TOQ</span><span class="co">RGB GROUP</span><span class="co">DR.CODE</span>
+      <span class="co" aria-hidden="true">WAKEB DATA</span><span class="co" aria-hidden="true">TOQ</span><span class="co" aria-hidden="true">RGB GROUP</span><span class="co" aria-hidden="true">DR.CODE</span><span class="co" aria-hidden="true">WAKEB DATA</span><span class="co" aria-hidden="true">TOQ</span><span class="co" aria-hidden="true">RGB GROUP</span><span class="co" aria-hidden="true">DR.CODE</span>
     </div></div>
   </div>
 </section>
@@ -439,41 +442,23 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   <div class="wrap">
     <div>
       <p class="eyebrow"><b>02</b> / <span class="ar">النطاق والأثر</span><span class="en">Scope &amp; impact</span></p>
-      <h2 class="display"><span class="ar">الشغل.<br><span class="red">والأثر.</span></span><span class="en">The work.<br><span class="red">The impact.</span></span></h2>
+      <h2 class="display"><span class="ar">الشغل.<br><span class="hi">والأثر.</span></span><span class="en">The work.<br><span class="hi">The impact.</span></span></h2>
       <div class="laurel">
         <svg viewBox="0 0 46 84" fill="currentColor" aria-hidden="true"><path d="M40 82C18 72 6 52 8 26l3 1C10 51 21 69 41 79z"/><ellipse cx="10" cy="20" rx="4" ry="9" transform="rotate(-12 10 20)"/><ellipse cx="5" cy="36" rx="4" ry="9" transform="rotate(-40 5 36)"/><ellipse cx="8" cy="52" rx="4" ry="9" transform="rotate(-62 8 52)"/><ellipse cx="17" cy="66" rx="4" ry="9" transform="rotate(-78 17 66)"/></svg>
         <strong data-count="60">60<sup>+</sup></strong>
         <svg viewBox="0 0 46 84" fill="currentColor" aria-hidden="true" style="transform:scaleX(-1)"><path d="M40 82C18 72 6 52 8 26l3 1C10 51 21 69 41 79z"/><ellipse cx="10" cy="20" rx="4" ry="9" transform="rotate(-12 10 20)"/><ellipse cx="5" cy="36" rx="4" ry="9" transform="rotate(-40 5 36)"/><ellipse cx="8" cy="52" rx="4" ry="9" transform="rotate(-62 8 52)"/><ellipse cx="17" cy="66" rx="4" ry="9" transform="rotate(-78 17 66)"/></svg>
       </div>
-      <p class="under">PROJECTS SHIPPED</p>
+      <p class="under"><span class="ar">مشروع مُسلَّم</span><span class="en">Projects shipped</span></p>
       <p class="desc"><span class="ar">مشاريع في أكثر من 16 قطاع، من التقنية المالية والتجارة الإلكترونية إلى التعليم والرعاية الصحية والخدمات.</span><span class="en">Products across 16+ industries, from fintech and e-commerce to education, healthcare and services.</span></p>
     </div>
     <ul class="list">
       <li><span class="i">01</span><h4><span class="ar">أنظمة ERP</span><span class="en">ERP Systems</span><small><span class="ar">وحدات متكاملة ومسارات عمل معقدة</span><span class="en">Connected modules and complex workflows</span></small></h4><span class="tag">RGB GROUP</span></li>
-      <li><span class="i">02</span><h4><span class="ar">Design Systems</span><span class="en">Design Systems</span><small><span class="ar">مكونات موحّدة قابلة للتوسع وموثّقة</span><span class="en">Scalable, documented component libraries</span></small></h4><span class="tag">WAKEB DATA</span></li>
+      <li><span class="i">02</span><h4><span class="ar">أنظمة التصميم</span><span class="en">Design Systems</span><small><span class="ar">مكونات موحّدة قابلة للتوسع وموثّقة</span><span class="en">Scalable, documented component libraries</span></small></h4><span class="tag">WAKEB DATA</span></li>
       <li><span class="i">03</span><h4><span class="ar">لوحات تحكم كثيفة البيانات</span><span class="en">Data-heavy Dashboards</span><small><span class="ar">تنظيم المعلومات لدعم القرار</span><span class="en">Information structured for decisions</span></small></h4><span class="tag">ENTERPRISE</span></li>
-      <li><span class="i">04</span><h4><span class="ar">أنظمة نقاط البيع POS</span><span class="en">POS Solutions</span><small><span class="ar">سرعة ودقة في لحظة البيع</span><span class="en">Speed and accuracy at the counter</span></small></h4><span class="tag">RETAIL</span></li>
+      <li><span class="i">04</span><h4><span class="ar">أنظمة نقاط البيع POS</span><span class="en">POS Solutions</span><small><span class="ar">سرعة ودقة في لحظة البيع</span><span class="en">Speed and accuracy at the counter</span></small></h4><span class="tag">RGB GROUP</span></li>
       <li><span class="i">05</span><h4><span class="ar">تطبيقات الموبايل</span><span class="en">Mobile Apps</span><small><span class="ar">رعاية صحية، تجارة إلكترونية، خدمات</span><span class="en">Healthcare, e-commerce and services</span></small></h4><span class="tag">TOQ</span></li>
       <li><span class="i">06</span><h4><span class="ar">منتجات الذكاء الاصطناعي</span><span class="en">AI-Powered Products</span><small><span class="ar">تقنية معقدة بتجربة بسيطة ومفهومة</span><span class="en">Complex tech, simple experiences</span></small></h4><span class="tag">AI</span></li>
     </ul>
-  </div>
-</section>
-
-<!-- RAW TO REAL -->
-<section class="band raw" id="process">
-  <div class="wrap">
-    <div>
-      <p class="eyebrow"><b>03</b> / <span class="ar">تحت السطح</span><span class="en">A look under the surface</span></p>
-      <h2 class="display"><span class="ar">من الهيكل.<br><span class="red">للواقع.</span></span><span class="en">From wire.<br><span class="red">To real.</span></span></h2>
-      <p><span class="ar">نظام موارد بشرية كامل، من خطوط الهيكل الأولى إلى الواجهة النهائية. اسحب المؤشر وشاهد الفرق.</span><span class="en">A full HR system, from the first structural lines to the shipped interface. Drag the handle to compare.</span></p>
-    </div>
-    <div class="compare" id="compare">
-      <img src="assets/wireframe.webp" alt="HR system — structure" width="1200" height="900">
-      <img class="after" src="assets/projects/mabroukui-3.webp" alt="HR system — final UI" width="1200" height="900">
-      <span class="tagl">Wireframe</span><span class="tagr">Final UI</span>
-      <input type="range" min="0" max="100" value="52" id="cmp" aria-label="Compare wireframe and final design">
-      <span class="handle"><span class="knob"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></span>
-    </div>
   </div>
 </section>
 
@@ -482,8 +467,8 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   <div class="wrap">
     <div class="top-row">
       <div>
-        <p class="eyebrow"><b>04</b> / <span class="ar">خلف الشاشات</span><span class="en">Behind the screens</span></p>
-        <h2 class="display"><span class="ar">ليست مجرد واجهات.<br>بل تجربة <span class="red">واضحة.</span></span><span class="en">Not just screens.<br>It's <span class="red">clarity.</span></span></h2>
+        <p class="eyebrow"><b>03</b> / <span class="ar">خلف الشاشات</span><span class="en">Behind the screens</span></p>
+        <h2 class="display"><span class="ar">ليست مجرد واجهات.<br>بل تجربة <span class="hi">واضحة.</span></span><span class="en">Not just screens.<br>It's <span class="hi">clarity.</span></span></h2>
       </div>
       <p class="intro"><span class="ar">أنا أحمد مبروك، مصمم UX/UI ومصمم منتجات من مصر. أركز على تحويل العمليات والمعلومات المعقدة إلى تجارب منظمة، تربط احتياجات المستخدم بأهداف المنتج وقابلية التنفيذ.</span><span class="en">I'm Ahmed Mabrouk, a UX/UI and product designer from Egypt. I turn complex processes and information into organized experiences that balance user needs, business goals and technical feasibility.</span></p>
     </div>
@@ -515,12 +500,30 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   </div>
 </section>
 
+<!-- RAW TO REAL -->
+<section class="band raw" id="process">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow"><b>04</b> / <span class="ar">تحت السطح</span><span class="en">A look under the surface</span></p>
+      <h2 class="display"><span class="ar">من الهيكل.<br><span class="hi">للواقع.</span></span><span class="en">From wire.<br><span class="hi">To real.</span></span></h2>
+      <p><span class="ar">نظام موارد بشرية كامل، من خطوط الهيكل الأولى إلى الواجهة النهائية. اسحب المؤشر وشاهد الفرق.</span><span class="en">A full HR system, from the first structural lines to the shipped interface. Drag the handle to compare.</span></p>
+    </div>
+    <div class="compare" id="compare">
+      <img src="assets/wireframe.webp" alt="HR system — structure" width="1200" height="900">
+      <img class="after" src="assets/projects/mabroukui-3.webp" alt="HR system — final UI" width="1200" height="900">
+      <span class="tagl">Wireframe</span><span class="tagr">Final UI</span>
+      <input type="range" min="0" max="100" value="52" id="cmp" aria-label="Compare wireframe and final design">
+      <span class="handle"><span class="knob"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b0d05" stroke-width="2.4"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></span>
+    </div>
+  </div>
+</section>
+
 <!-- JOURNEY -->
 <section class="band journey" id="journey">
   <div class="wrap">
     <div>
       <p class="eyebrow"><b>05</b> / <span class="ar">الرحلة</span><span class="en">The journey</span></p>
-      <h2 class="display"><span class="ar">خطوات صغيرة.<br><span class="red">أثر كبير.</span></span><span class="en">Little steps.<br><span class="red">Big products.</span></span></h2>
+      <h2 class="display"><span class="ar">خطوات صغيرة.<br><span class="hi">أثر كبير.</span></span><span class="en">Little steps.<br><span class="hi">Big products.</span></span></h2>
       <div class="timeline" id="timeline">
         <div class="job open">
           <button type="button" aria-expanded="true"><time>09/2024 — <span class="ar">الآن</span><span class="en">Now</span></time><h3>UX/UI Designer<small>Wakeb Data · <span class="ar">السعودية</span><span class="en">Saudi Arabia</span></small></h3><span class="plus"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span></button>
@@ -568,11 +571,11 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       <div class="blk">
         <h3><span class="ar">مجالات عملت فيها</span><span class="en">Industries</span></h3>
         <ul class="sectors">
-          <li><span class="ar">التقنية المالية</span><span class="en">Fintech</span><span class="ar">Fintech</span></li>
-          <li><span class="ar">التجارة الإلكترونية</span><span class="en">E-commerce</span><span class="ar">E-commerce</span></li>
-          <li><span class="ar">الرعاية الصحية</span><span class="en">Healthcare</span><span class="ar">Health</span></li>
-          <li><span class="ar">التعليم</span><span class="en">Education</span><span class="ar">EdTech</span></li>
-          <li><span class="ar">الخدمات والمؤسسات</span><span class="en">Services &amp; enterprise</span><span class="ar">B2B</span></li>
+          <li><span class="ar">التقنية المالية</span><span class="en">Fintech</span></li>
+          <li><span class="ar">التجارة الإلكترونية</span><span class="en">E-commerce</span></li>
+          <li><span class="ar">الرعاية الصحية</span><span class="en">Healthcare</span></li>
+          <li><span class="ar">التعليم</span><span class="en">Education</span></li>
+          <li><span class="ar">الخدمات والمؤسسات</span><span class="en">Services &amp; enterprise</span></li>
         </ul>
       </div>
     </aside>
@@ -584,7 +587,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   <div class="wrap">
     <div>
       <p class="eyebrow"><b>06</b> / <span class="ar">مشروعك القادم</span><span class="en">Your next product</span></p>
-      <h2 class="display"><span class="ar">لنعمل<br>معًا<span class="red">.</span></span><span class="en">Let's work<br>together<span class="red">.</span></span></h2>
+      <h2 class="display"><span class="ar">لنعمل<br>معًا<span class="hi">.</span></span><span class="en">Let's work<br>together<span class="hi">.</span></span></h2>
       <p class="pitch"><span class="ar">لديك منتج معقد يحتاج أن يكون أوضح؟ أخبرني عنه ولنبدأ.</span><span class="en">Got a complex product that needs to feel clear? Tell me about it.</span></p>
       <a class="btn" href="https://wa.me/201113949916" target="_blank" rel="noopener"><span class="ar">ابدأ المحادثة</span><span class="en">Start a conversation</span> ↗</a>
     </div>
@@ -598,7 +601,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     <div class="poster" id="poster">
       <canvas id="planes" aria-hidden="true"></canvas>
       <span class="rec"><i></i> mabroukui.com</span>
-      <p class="display"><span class="ar">اجعلها<br><span class="red">أوضح.</span></span><span class="en">Make it<br><span class="red">feel clear.</span></span></p>
+      <p class="display"><span class="ar">اجعلها<br><span class="hi">أوضح.</span></span><span class="en">Make it<br><span class="hi">feel clear.</span></span></p>
     </div>
   </div>
 </section>
@@ -722,7 +725,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   }, { passive: true });
 
   /* paper-plane triangle, drawn on the contact poster */
-  const colors = ['#ec2340', '#ff3a55', '#eef0f6', '#96b4e6', '#5ee0c4'];
+  const colors = ['#ccff00', '#e4ff5c', '#eef0f6', '#96b4e6', '#5ee0c4'];
   const dpr = Math.min(2, devicePixelRatio || 1);
   function tri(ctx, p) {
     ctx.save(); ctx.translate(p.x * dpr, p.y * dpr); ctx.rotate(p.r); ctx.globalAlpha = p.life;
@@ -764,7 +767,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   function liveBuild() {
     const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
     const small = innerWidth < 700;
-    const crew = [['Layout', '#ec2340'], ['Copy', '#0d99ff'], ['Image', '#2fd3a7'], ['Type', '#ffb020']]
+    const crew = [['Layout', '#ccff00'], ['Copy', '#0d99ff'], ['Image', '#ff4fd8'], ['Type', '#ffb020']]
       .slice(0, small ? 3 : 4);
     const stage = document.createElement('div'); stage.id = 'stage'; document.body.appendChild(stage);
     const doc = el => { const r = el.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; };
@@ -825,6 +828,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
 
     const agents = crew.map(([name, color], i) => {
       const el = document.createElement('div'); el.className = 'ag'; el.style.setProperty('--c', color);
+      if (color === '#ccff00' || color === '#ffb020') el.style.setProperty('--t', '#0b0d05');
       el.innerHTML = `<svg width="18" height="20" viewBox="0 0 18 20"><path d="M1.5 1.5l14.5 7-6.4 1.9L6.3 17z" fill="${color}" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg><b>${name}</b>`;
       stage.appendChild(el);
       const a = { el, color, x: 0, y: 0, q: Promise.resolve(),
@@ -992,7 +996,11 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     async function run(c) {
       if (c.state !== 'idle') return;
       /* free the crew: anything still building off-screen snaps to done */
-      ctxs.forEach(x => { if (x.state === 'run') { const r = x.sec.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) x.finish(); } });
+      ctxs.forEach(x => {
+        const r = x.sec.getBoundingClientRect();
+        if (x.state === 'run' && (r.bottom < 0 || r.top > innerHeight)) x.finish();
+        else if (x.state === 'idle' && r.bottom < 0) x.finish();   /* scrolled past without ever being seen */
+      });
       if (!stage.classList.contains('on')) {
         agents.forEach(a => a.set(innerWidth / 2 + scrollX + (Math.random() - .5) * 110, innerHeight * .45 + scrollY + (Math.random() - .5) * 80));
         stage.classList.add('on');
@@ -1055,15 +1063,15 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     }
     {
       const sec = $('#work'), c = ctx(sec, ['الأعمال', 'Work']);
-      const eb = $('.eyebrow', sec), h2 = $('h2', sec), arrows = $$('.arrows button', sec), rail = $('#rail'), cards = $$('.card', rail);
+      const eb = $('.eyebrow', sec), h2 = $('h2', sec), sub = $('.sub', sec), arrows = $$('.arrows button', sec), rail = $('#rail'), cards = $$('.card', rail);
       const shot = k => $('.shot', k), meta = k => $('.meta', k), file = k => $('img', k).getAttribute('src').split('/').pop();
-      c.hide(eb, h2, arrows, cards.map(k => [shot(k), meta(k)]));
+      c.hide(eb, h2, sub, arrows, cards.map(k => [shot(k), meta(k)]));
       c.plan = async () => {
         const rr = rail.getBoundingClientRect();
         const shown = cards.filter(k => { const r = k.getBoundingClientRect(); return r.left >= rr.left - 2 && r.right <= rr.right + 2; }).slice(0, 4);
         if (!shown.length) shown.push(cards[0]);
         await Promise.all([
-          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 55 }); }),
+          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 55 }); await c.type(a, sub, { ms: 12 }); }),
           c.with(A(1), a => c.series(a, arrows, async b => { await c.frame(a, b, 'Icon button', 300); c.show(b, 'bin'); }, async b => c.show(b))),
           c.with(A(2), a => c.series(a, shown,
             async k => { await c.frame(a, k, 'Card / 01', 500); await c.image(a, shot(k), file(k)); await c.type(a, meta(k)); },
