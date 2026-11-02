@@ -802,21 +802,19 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .005); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
       o.connect(g).connect(ac.destination); o.start(t); o.stop(t + dur + .02);
     };
-    const hiss = (dur, vol, f0, f1) => {
-      const t = ac.currentTime, n = Math.ceil(ac.sampleRate * dur), b = ac.createBuffer(1, n, ac.sampleRate), d = b.getChannelData(0);
-      for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+    /* a short burst of filtered noise: the body of a key press or a mouse click */
+    const burst = (dur, vol, freq, delay = 0) => {
+      const t = ac.currentTime + delay, n = Math.ceil(ac.sampleRate * dur), b = ac.createBuffer(1, n, ac.sampleRate), d = b.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
       const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
-      s.buffer = b; f.type = 'bandpass'; f.Q.value = 1.2; f.frequency.setValueAtTime(f0, t); f.frequency.exponentialRampToValueAtTime(f1, t + dur);
-      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + dur * .3); g.gain.linearRampToValueAtTime(0, t + dur);
+      s.buffer = b; f.type = 'bandpass'; f.frequency.value = freq; f.Q.value = .9; g.gain.value = vol;
       s.connect(f).connect(g).connect(ac.destination); s.start(t);
     };
+    /* three sounds only: keyboard while typing, mouse click, and a rising shimmer when something is generated */
     const cues = {
-      click: [60, () => tone(2100, 1300, .035, .045, 'triangle')],
-      key: [45, () => tone(1500 + Math.random() * 700, 900, .022, .016, 'triangle')],
-      frame: [120, () => tone(320, 640, .22, .022)],
-      pick: [120, () => tone(520, 880, .09, .035)],
-      drop: [120, () => { tone(880, 520, .09, .035); tone(170, 90, .12, .05); }],
-      sweep: [400, () => hiss(.6, .035, 600, 3200)]
+      key: [55, () => { burst(.03, .22, 2400 + Math.random() * 1400); tone(150 + Math.random() * 40, 90, .035, .03); }],
+      click: [70, () => { burst(.012, .35, 4200); burst(.01, .2, 3000, .045); }],
+      gen: [220, () => { tone(330, 990, .32, .022); tone(495, 1480, .32, .012); }]
     };
     const sfx = kind => {
       if (!sound || !ac || ac.state !== 'running' || document.hidden) return;
@@ -882,7 +880,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         }
         const rtl = root.dir === 'rtl', x0 = rtl ? right : l, x1 = rtl ? l : right;
         const y = Math.max(s.y, scrollY + 70) + 10;
-        await a.to(x0, y, c); a.click(); if (!c.rush) sfx('sweep');
+        await a.to(x0, y, c); a.click(); if (!c.rush) sfx('gen');
         await tween(small ? 450 : 750, k => {
           const x = x0 + (x1 - x0) * ease(k); a.set(x, y);
           cols.forEach(g => { const gl = parseFloat(g.style.left); if (rtl ? gl + cw >= x : gl <= x) g.classList.add('in'); });
@@ -893,7 +891,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       c.frame = async (a, el, tag, hold = 900) => {
         if (c.rush || !el || !vis(el)) return;
         const r = doc(el); await a.to(r.x, r.y, c); a.click();
-        const f = c.box({ x: r.x, y: r.y, w: 0, h: 0 }, tag, 'ph'); sfx('frame');
+        const f = c.box({ x: r.x, y: r.y, w: 0, h: 0 }, tag, 'ph'); sfx('gen');
         await tween(Math.min(700, 260 + (r.w + r.h) * .25), k => {
           const e = ease(k); f.style.width = r.w * e + 'px'; f.style.height = r.h * e + 'px'; a.set(r.x + r.w * e, r.y + r.h * e);
         }, c);
@@ -905,7 +903,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         if (c.rush || !vis(el)) return c.show(el);
         const r = doc(el), chip = document.createElement('span'); chip.className = 'chip'; chip.textContent = file;
         a.el.appendChild(chip);
-        await a.to(r.x + r.w * .5, r.y + r.h * .45, c); a.click(); chip.remove(); if (!c.rush) sfx('drop');
+        await a.to(r.x + r.w * .5, r.y + r.h * .45, c); a.click(); chip.remove(); if (!c.rush) sfx('gen');
         if (swap) swap();
         c.show(el, 'wipe'); await c.wait(300);
       };
@@ -972,13 +970,13 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         const g = document.createElement('div'); g.className = src.parentElement.className + ' dupe';
         g.style.cssText = `left:${r0.x}px;top:${r0.y}px;width:${r0.w}px;height:${r0.h}px;direction:${getComputedStyle(src).direction}`;
         const cl = src.cloneNode(true); cl.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
-        g.appendChild(cl); stage.appendChild(g); c.fx.add(g); sfx('pick');
+        g.appendChild(cl); stage.appendChild(g); c.fx.add(g);
         const ox = a.x - r0.x, oy = a.y - r0.y;
         await tween(Math.min(800, 300 + Math.hypot(r1.x - r0.x, r1.y - r0.y) * .4), k => {
           const e = ease(k), x = r0.x + (r1.x - r0.x) * e, y = r0.y + (r1.y - r0.y) * e;
           g.style.left = x + 'px'; g.style.top = y + 'px'; a.set(x + ox, y + oy);
         }, c);
-        c.fx.delete(g); g.remove(); if (!c.rush) sfx('drop');
+        c.fx.delete(g); g.remove(); if (!c.rush) sfx('gen');
       };
       c.finish = () => {
         if (c.state === 'done') return;
