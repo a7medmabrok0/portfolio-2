@@ -859,7 +859,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     /* a build context per section: its hidden targets, its overlays, and a rush switch */
     const ctxs = [];
     function ctx(sec, label) {
-      const c = { sec, label, state: 'idle', rush: false, targets: new Set(), fx: new Set(), undo: new Set(), after: null };
+      const c = { sec, label, state: 'idle', rush: false, targets: new Set(), fx: new Set(), undo: new Set(), after: null, jobs: [], waiters: [] };
       c.hide = (...els) => els.flat(Infinity).forEach(el => { if (el) { el.classList.add('bw'); c.targets.add(el); } });
       c.show = (el, anim) => {
         if (!el) return; el.classList.remove('bw');
@@ -874,7 +874,6 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         const run = Promise.all(team.map(a => a.q)).then(async () => { try { await fn(...team); } catch (_) {} });
         team.forEach(a => { a.q = run; }); return run;
       };
-      c.with = (a, fn) => c.team([a], fn);
       c.box = (r, tag, cls) => {
         const f = document.createElement('div'); f.className = 'fr ' + (cls || '');
         f.style.cssText = `left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px`;
@@ -929,15 +928,33 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         const back = () => { di.forEach((im, k) => im.setAttribute('src', real[k])); c.undo.delete(back); };
         c.undo.add(back); return back;
       };
-      /* the team's lead builds the first component alone; then every member takes copies of it in parallel and edits them */
-      c.series = async (team, items, make, edit) => {
-        items = items.filter(Boolean); if (!items.length) return;
-        const first = items[0], rest = items.slice(1);
-        await make(team[0], first);
-        await Promise.all(team.map(async (a, j) => {
-          for (let i = j; i < rest.length; i += team.length) { await c.dup(a, first, rest[i]); await edit(a, rest[i], first); }
-        }));
+      /* a section is a list of jobs; a job can wait on others. c.work() puts the whole crew on it: every agent
+         keeps taking the next ready job until none are left, so nobody idles while anything is still unbuilt */
+      c.job = (fn, ...deps) => { const j = { fn, deps: deps.filter(Boolean), started: false, done: false }; c.jobs.push(j); return j; };
+      /* a repeated group: its first component is one job; each copy of it becomes available only once that's built */
+      c.copies = (items, make, edit) => {
+        items = items.filter(Boolean); if (!items.length) return [];
+        const first = items[0], m = c.job(a => make(a, first));
+        return [m, ...items.slice(1).map(it => c.job(async a => { await c.dup(a, first, it); await edit(a, it, first); }, m))];
       };
+      c.work = () => c.team(agents, (...all) => {
+        const busy = new Set();
+        return Promise.all(all.map(async a => {
+          for (;;) {
+            const j = c.jobs.find(j => !j.started && j.deps.every(d => d.done));
+            if (j) {
+              j.started = true; busy.add(a);
+              try { await j.fn(a); } catch (_) {}
+              busy.delete(a); j.done = true; const w = c.waiters; c.waiters = []; w.forEach(r => r());
+            } else if (c.jobs.some(j => !j.done)) {
+              /* nothing ready yet: go stand by a busy agent until a job frees up */
+              const b = [...busy][0];
+              if (b && !c.rush) a.to(b.x + 14 + Math.random() * 26, b.y + 10 + Math.random() * 24, c, 450);
+              await new Promise(r => c.waiters.push(r));
+            } else return;
+          }
+        }));
+      });
       c.retype = (o = {}) => (a, d, s) => c.type(a, d, { from: s, ms: 22, ...o });
       /* type el's visible text with a caret the cursor rides on; with `from`, first show src's text selected */
       c.type = async (a, el, o = {}) => {
@@ -1052,10 +1069,8 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     $('.crew-skip', pill).addEventListener('click', () => { ctxs.forEach(c => c.finish()); done(); });
     document.getElementById('lang').addEventListener('click', () => ctxs.forEach(c => c.state === 'run' && c.finish()));
 
-    /* ---- section plans: each section splits into tracks that run at the same time, each held by its own team.
-       A repeated group is always started by one agent building the first component; then the whole team
-       pastes copies of it in parallel and edits them. ---- */
-    const T = (...ix) => [...new Set(ix.map(A))];
+    /* ---- section plans: each section is a list of jobs the whole crew shares (see c.work). A repeated group
+       starts with its first component built alone; its copies open up to whichever agents are free. ---- */
     const hero = $('#home');
     {
       const c = ctx(hero, ['الواجهة', 'Hero']);
@@ -1066,21 +1081,20 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       const button = (a, b) => c.frame(a, b, 'Button', 300).then(() => c.type(a, b, { ms: 35 }));
       c.plan = async () => {
         await c.wait(700);
-        await Promise.all([
-          c.team(T(0), async a => { await c.guides(a); await c.frame(a, giant, 'PORTFOLIO', 400); await c.type(a, giant, { ms: 70 }); }),
-          c.team(T(1, 2), async (...m) => {
-            await c.type(m[0], logo, { ms: 40 });
-            await c.series(m, links, (a, l) => c.type(a, l, { ms: 35 }), c.retype({ ms: 35 }));
-            await c.series(m, tools, button, c.retype({ ms: 35 }));
-          }),
-          c.team(T(3), async a => { await c.frame(a, portrait, 'Frame · Portrait', 500); await c.image(a, portrait, 'portrait.webp'); await c.type(a, loc, { ms: 14 }); }),
-          c.team(T(4), async a => { await c.type(a, hello, { ms: 45 }); await c.type(a, name, { ms: 55 }); }),
-          c.team(T(5), async a => { await c.wait(300); await c.type(a, role, { ms: 28 }); await c.type(a, lede, { ms: 8 }); }),
-          c.team(T(6, 7), async (...m) => {
-            await c.series(m, stats, (a, s) => c.frame(a, s, 'Stat', 300).then(() => c.type(a, s)), c.retype());
-            await c.series(m, ctas, button, c.retype({ ms: 30 }));
-          })
-        ]);
+        c.job(a => c.guides(a));
+        c.job(a => c.frame(a, giant, 'PORTFOLIO', 400).then(() => c.type(a, giant, { ms: 70 })));
+        c.job(a => c.frame(a, portrait, 'Frame · Portrait', 500).then(() => c.image(a, portrait, 'portrait.webp')));
+        const hi = c.job(a => c.type(a, hello, { ms: 45 }));
+        const nm = c.job(a => c.type(a, name, { ms: 55 }), hi);
+        c.job(a => c.type(a, role, { ms: 28 }), nm);
+        c.job(a => c.type(a, lede, { ms: 8 }));
+        c.job(a => c.type(a, logo, { ms: 40 }));
+        c.copies(stats, (a, s) => c.frame(a, s, 'Stat', 300).then(() => c.type(a, s)), c.retype());
+        c.copies(links, (a, l) => c.type(a, l, { ms: 35 }), c.retype({ ms: 35 }));
+        c.copies(ctas, button, c.retype({ ms: 30 }));
+        c.copies(tools, button, c.retype({ ms: 35 }));
+        c.job(a => c.type(a, loc, { ms: 14 }));
+        await c.work();
       };
     }
     {
@@ -1092,19 +1106,21 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         const rr = rail.getBoundingClientRect();
         const shown = cards.filter(k => { const r = k.getBoundingClientRect(); return r.left >= rr.left - 2 && r.right <= rr.right + 2; }).slice(0, 4);
         if (!shown.length) shown.push(cards[0]);
-        await Promise.all([
-          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); }),
-          c.team(T(1), a => c.type(a, h2, { ms: 50 })),
-          c.team(T(2), async a => { await c.wait(400); await c.type(a, sub, { ms: 10 }); }),
-          c.team(T(3), a => c.series([a], arrows, (a, b) => c.frame(a, b, 'Icon button', 300).then(() => c.show(b, 'bin')), async (a, b) => c.show(b))),
-          c.team(T(4, 5, 6, 7), (...m) => c.series(m, shown,
-            async (a, k) => { await c.frame(a, k, 'Card / 01', 400); await c.image(a, shot(k), file(k)); await c.type(a, meta(k), { ms: 24 }); },
-            async (a, k, first) => {
-              const back = c.borrow(shot(k), shot(first)); c.show(shot(k));
-              await c.type(a, meta(k), { from: meta(first), ms: 20 });
-              await c.image(a, shot(k), file(k), back);
-            }))
-        ]);
+        const backs = new Map();
+        const cj = c.copies(shown,
+          async (a, k) => { await c.frame(a, k, 'Card / 01', 400); await c.image(a, shot(k), file(k)); await c.type(a, meta(k), { ms: 24 }); },
+          async (a, k, first) => { backs.set(k, c.borrow(shot(k), shot(first))); c.show(shot(k)); });
+        /* once a copy has landed, its title retype and its image drop are two jobs two agents take at the same time */
+        shown.slice(1).forEach((k, i) => {
+          c.job(a => c.type(a, meta(k), { from: meta(shown[0]), ms: 20 }), cj[i + 1]);
+          c.job(a => c.image(a, shot(k), file(k), backs.get(k)), cj[i + 1]);
+        });
+        c.job(a => c.guides(a));
+        c.job(a => c.type(a, eb, { ms: 25 }));
+        c.job(a => c.type(a, h2, { ms: 50 }));
+        c.job(a => c.type(a, sub, { ms: 10 }));
+        c.copies(arrows, (a, b) => c.frame(a, b, 'Icon button', 300).then(() => c.show(b, 'bin')), async (a, b) => c.show(b));
+        await c.work();
       };
     }
     {
@@ -1116,10 +1132,9 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         track.style.animationPlayState = 'paused';
         const m = mq.getBoundingClientRect();
         const inView = cos.filter(k => { const r = k.getBoundingClientRect(); return r.left >= m.left && r.right <= m.right; });
-        await Promise.all([
-          c.team(T(0), a => c.type(a, label, { ms: 28 })),
-          c.team(T(1, 2, 3, 4), (...t) => c.series(t, inView, (a, k) => c.frame(a, k, 'Logo', 300).then(() => c.type(a, k, { ms: 40 })), c.retype({ ms: 35 })))
-        ]);
+        c.copies(inView, (a, k) => c.frame(a, k, 'Logo', 300).then(() => c.type(a, k, { ms: 40 })), c.retype({ ms: 35 }));
+        c.job(a => c.type(a, label, { ms: 28 }));
+        await c.work();
       };
     }
     {
@@ -1127,15 +1142,14 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       const eb = $('.eyebrow', sec), h2 = $('h2', sec), laurel = $('.laurel', sec), under = $('.under', sec), desc = $('.desc', sec), rows = $$('.list li', sec);
       c.hide(eb, h2, laurel, under, desc, rows);
       c.plan = async () => {
-        await Promise.all([
-          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); }),
-          c.team(T(1), a => c.type(a, h2, { ms: 55 })),
-          c.team(T(2), async a => {
-            await c.frame(a, laurel, 'Badge', 400); c.show(laurel, 'bin'); countUp($('[data-count]', laurel));
-            await c.type(a, under, { ms: 28 }); await c.type(a, desc, { ms: 10 });
-          }),
-          c.team(T(3, 4, 5, 6, 7), (...m) => c.series(m, rows, (a, r) => c.frame(a, r, 'Row / 01', 350).then(() => c.type(a, r, { ms: 20 })), c.retype({ ms: 16 })))
-        ]);
+        c.copies(rows, (a, r) => c.frame(a, r, 'Row / 01', 350).then(() => c.type(a, r, { ms: 20 })), c.retype({ ms: 16 }));
+        c.job(a => c.guides(a));
+        c.job(a => c.type(a, eb, { ms: 25 }));
+        c.job(a => c.type(a, h2, { ms: 55 }));
+        const badge = c.job(async a => { await c.frame(a, laurel, 'Badge', 400); c.show(laurel, 'bin'); countUp($('[data-count]', laurel)); });
+        c.job(a => c.type(a, under, { ms: 28 }), badge);
+        c.job(a => c.type(a, desc, { ms: 10 }));
+        await c.work();
       };
     }
     {
@@ -1145,20 +1159,19 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       const qp = $('p', quote), cite = $('cite', quote);
       c.hide(eb, h2, intro, h3s, eduB, eduP, chips, steps, quote, qp, cite);
       c.plan = async () => {
-        await Promise.all([
-          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 45 }); }),
-          c.team(T(1), async a => { await c.wait(300); await c.type(a, intro, { ms: 9 }); }),
-          c.team(T(2), async a => {
-            await c.type(a, h3s[0], { ms: 30 });
-            for (const b of eduB) { await c.type(a, b, { ms: 28 }); const p = b.parentElement.querySelector('p'); if (p) await c.type(a, p, { ms: 12 }); }
-          }),
-          c.team(T(3, 4), (...m) => c.series(m, chips, (a, k) => c.frame(a, k, 'Chip', 250).then(() => c.type(a, k, { ms: 28 })), c.retype({ ms: 22 }))),
-          c.team(T(5, 6), async (...m) => {
-            await c.type(m[0], h3s[1], { ms: 30 });
-            await c.series(m, steps, (a, s) => c.frame(a, s, 'Step', 350).then(() => c.type(a, s, { ms: 14 })), c.retype({ ms: 12 }));
-          }),
-          c.team(T(7), async a => { await c.frame(a, quote, 'Quote', 400); c.show(quote, 'wipe'); await c.type(a, qp, { ms: 16 }); await c.type(a, cite, { ms: 35 }); })
-        ]);
+        c.job(a => c.guides(a));
+        c.job(a => c.type(a, eb, { ms: 25 }));
+        c.job(a => c.type(a, h2, { ms: 45 }));
+        c.job(a => c.type(a, intro, { ms: 9 }));
+        c.job(a => c.type(a, h3s[0], { ms: 30 }));
+        c.job(a => c.type(a, h3s[1], { ms: 30 }));
+        const q = c.job(async a => { await c.frame(a, quote, 'Quote', 400); c.show(quote, 'wipe'); });
+        const qt = c.job(a => c.type(a, qp, { ms: 16 }), q);
+        c.job(a => c.type(a, cite, { ms: 35 }), qt);
+        c.copies(steps, (a, s) => c.frame(a, s, 'Step', 350).then(() => c.type(a, s, { ms: 14 })), c.retype({ ms: 12 }));
+        eduB.forEach(b => { const t = c.job(a => c.type(a, b, { ms: 28 })), p = b.parentElement.querySelector('p'); if (p) c.job(a => c.type(a, p, { ms: 12 }), t); });
+        c.copies(chips, (a, k) => c.frame(a, k, 'Chip', 250).then(() => c.type(a, k, { ms: 28 })), c.retype({ ms: 22 }));
+        await c.work();
       };
     }
     {
@@ -1167,20 +1180,20 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       c.hide(eb, h2, p, cmp);
       c.after = () => cmp.style.setProperty('--pos', range.value + '%');
       c.plan = async () => {
-        await Promise.all([
-          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); }),
-          c.team(T(1), a => c.type(a, h2, { ms: 55 })),
-          c.team(T(3), async a => { await c.wait(400); await c.type(a, p, { ms: 10 }); }),
-          c.team(T(2), async a => {
-            cmp.style.setProperty('--pos', '100%');
-            await c.frame(a, cmp, 'HR System / Wireframe', 400); await c.image(a, cmp, 'wireframe.webp');
-            if (c.rush) return;
-            const r = doc(cmp), at = v => [r.x + r.w * v / 100, r.y + r.h / 2];
-            await a.to(...at(100), c); a.click();
-            const slide = (from, to, ms) => tween(ms, k => { const v = from + (to - from) * ease(k); cmp.style.setProperty('--pos', v + '%'); a.set(...at(v)); }, c);
-            await slide(100, 18, 1100); await slide(18, +range.value, 700);
-          })
-        ]);
+        c.job(async a => {
+          cmp.style.setProperty('--pos', '100%');
+          await c.frame(a, cmp, 'HR System / Wireframe', 400); await c.image(a, cmp, 'wireframe.webp');
+          if (c.rush) return;
+          const r = doc(cmp), at = v => [r.x + r.w * v / 100, r.y + r.h / 2];
+          await a.to(...at(100), c); a.click();
+          const slide = (from, to, ms) => tween(ms, k => { const v = from + (to - from) * ease(k); cmp.style.setProperty('--pos', v + '%'); a.set(...at(v)); }, c);
+          await slide(100, 18, 1100); await slide(18, +range.value, 700);
+        });
+        c.job(a => c.guides(a));
+        c.job(a => c.type(a, eb, { ms: 25 }));
+        c.job(a => c.type(a, h2, { ms: 55 }));
+        c.job(a => c.type(a, p, { ms: 10 }));
+        await c.work();
       };
     }
     {
@@ -1189,22 +1202,21 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       const icon = t => $('img', t).alt.toLowerCase() + '.svg';
       c.hide(eb, h2, jobs, h3s, tl, sectors);
       c.plan = async () => {
-        await Promise.all([
-          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); }),
-          c.team(T(1), a => c.type(a, h2, { ms: 50 })),
-          c.team(T(2, 3, 4), (...m) => c.series(m, jobs,
-            (a, j) => c.frame(a, j, 'Role / 01', 350).then(() => c.type(a, j, { ms: 8, max: 1400 })),
-            async (a, j, first) => { c.show(j); await c.type(a, $('button', j), { from: $('button', first), ms: 18 }); })),
-          c.team(T(5, 6), async (...m) => {
-            await c.type(m[0], h3s[0], { ms: 30 });
-            await c.series(m, tl, (a, t) => c.frame(a, t, 'Icon', 250).then(() => c.image(a, t, icon(t))),
-              async (a, t, first) => { const back = c.borrow(t, first); c.show(t); await c.image(a, t, icon(t), back); });
-          }),
-          c.team(T(7), async a => {
-            await c.type(a, h3s[1], { ms: 30 });
-            await c.series([a], sectors, (a, s) => c.type(a, s, { ms: 18 }), c.retype({ ms: 16 }));
-          })
-        ]);
+        /* the first role's header is built, then its copies open up while another agent types its bullet points */
+        const [firstRole] = c.copies(jobs,
+          async (a, j) => { await c.frame(a, j, 'Role / 01', 350); c.show(j); await c.type(a, $('button', j), { ms: 18 }); },
+          async (a, j, first) => { c.show(j); await c.type(a, $('button', j), { from: $('button', first), ms: 18 }); });
+        const notes = jobs[0] && $('.body ul', jobs[0]);
+        if (notes) { c.hide(notes); c.job(a => c.type(a, notes, { ms: 8, max: 1400 }), firstRole); }
+        c.job(a => c.guides(a));
+        c.job(a => c.type(a, eb, { ms: 25 }));
+        c.job(a => c.type(a, h2, { ms: 50 }));
+        c.job(a => c.type(a, h3s[0], { ms: 30 }));
+        c.job(a => c.type(a, h3s[1], { ms: 30 }));
+        c.copies(tl, (a, t) => c.frame(a, t, 'Icon', 250).then(() => c.image(a, t, icon(t))),
+          async (a, t, first) => { const back = c.borrow(t, first); c.show(t); await c.image(a, t, icon(t), back); });
+        c.copies(sectors, (a, s) => c.type(a, s, { ms: 18 }), c.retype({ ms: 16 }));
+        await c.work();
       };
     }
     {
@@ -1213,13 +1225,16 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       const poster = $('#poster'), pd = $('.display', poster), foot = $$('footer .wrap > span');
       c.hide(eb, h2, pitch, btn, ways, poster, pd, foot);
       c.plan = async () => {
-        await Promise.all([
-          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 55 }); }),
-          c.team(T(1), async a => { await c.wait(300); await c.type(a, pitch, { ms: 12 }); await c.frame(a, btn, 'Button', 300); await c.type(a, btn, { ms: 30 }); }),
-          c.team(T(2, 3, 4), (...m) => c.series(m, ways, (a, w) => c.frame(a, w, 'Link / Email', 350).then(() => c.type(a, w, { ms: 18 })), c.retype({ ms: 14 }))),
-          c.team(T(5), async a => { await c.frame(a, poster, 'Poster', 400); c.show(poster, 'wipe'); await c.type(a, pd, { ms: 45 }); }),
-          c.team(T(6, 7), async (...m) => { await Promise.all(foot.map((f, i) => c.type(m[i % m.length], f, { ms: 14 }))); })
-        ]);
+        c.copies(ways, (a, w) => c.frame(a, w, 'Link / Email', 350).then(() => c.type(a, w, { ms: 18 })), c.retype({ ms: 14 }));
+        c.job(a => c.guides(a));
+        c.job(a => c.type(a, eb, { ms: 25 }));
+        c.job(a => c.type(a, h2, { ms: 55 }));
+        c.job(a => c.type(a, pitch, { ms: 12 }));
+        c.job(a => c.frame(a, btn, 'Button', 300).then(() => c.type(a, btn, { ms: 30 })));
+        const ps = c.job(async a => { await c.frame(a, poster, 'Poster', 400); c.show(poster, 'wipe'); });
+        c.job(a => c.type(a, pd, { ms: 45 }), ps);
+        foot.forEach(f => c.job(a => c.type(a, f, { ms: 14 })));
+        await c.work();
         /* finale: once the whole page is up, the crew circles the poster */
         if (c.rush || !ctxs.every(x => x === c || x.state === 'done') || !vis(poster)) return;
         const r = doc(poster), cx = r.x + r.w / 2, cy = r.y + r.h / 2, R = Math.min(r.w, r.h) * .32;
