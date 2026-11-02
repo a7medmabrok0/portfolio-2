@@ -91,6 +91,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .portrait img{width:100%;height:auto;filter:contrast(1.08) brightness(.95);-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 72%,transparent 100%)}
 .hero-copy{position:relative;z-index:2;align-self:end;padding-top:clamp(140px,17vw,250px);max-width:420px}
 .hello{font-family:var(--script-ar);font-size:clamp(30px,3.4vw,46px);color:var(--text);line-height:1;margin:0 0 6px;transform:rotate(-4deg);transform-origin:right}
+html[lang=ar] .hello{font-family:Thmanyah,var(--script-ar);font-weight:400;font-size:clamp(22px,2.3vw,32px);color:#c4c8d6;transform:none;margin-bottom:12px}
 html[lang=en] .hello{font-family:var(--script-en);transform-origin:left}
 .name{font-size:clamp(48px,6.2vw,92px)}
 .name .dot{color:var(--acc)}
@@ -302,9 +303,11 @@ html.build .bw{opacity:0!important;pointer-events:none}
 #stage.on .ag{opacity:1}#stage.off .ag{opacity:0}
 .ag svg{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55));transform-origin:2px 2px}
 .ag.click svg{animation:clk .28s}
+/* after a section is built the crew lines up at the bottom of the screen, pointing down, and bobs */
+.ag.down svg{transform:rotate(-140deg);animation:bob 1.1s ease-in-out infinite}
+@keyframes bob{50%{transform:rotate(-140deg) translate(-2.6px,-3px)}}
 @keyframes clk{40%{transform:scale(.75)}}
-.ag b{position:absolute;left:13px;top:17px;font-size:10.5px;font-weight:700;line-height:1;color:var(--t,#fff);background:var(--c);padding:4px 7px 5px;border-radius:2px 8px 8px 8px;white-space:nowrap}
-.ag .chip{position:absolute;left:13px;top:38px;font-size:10.5px;line-height:1;background:#fff;color:#111;padding:5px 7px;border-radius:4px;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.ag .chip{position:absolute;left:12px;top:16px;font-size:10.5px;line-height:1;background:#fff;color:#111;padding:5px 7px;border-radius:4px;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.4)}
 .fr{position:absolute;border:1.5px solid var(--fig);transition:opacity .35s}
 .fr.ph{background:rgba(13,153,255,.12)}
 .fr i{position:absolute;width:7px;height:7px;background:#fff;border:1.5px solid var(--fig)}
@@ -328,7 +331,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
 .crew-snd[aria-pressed=true] .x,.crew-snd[aria-pressed=false] .w{display:none}
 .crew-snd[aria-pressed=false]{color:var(--muted)}
 .crew.done .crew-skip,.crew.done .crew-snd{display:none}
-.crew.gone{opacity:0;transform:translate(-50%,12px);pointer-events:none}
+.crew.gone,.crew.idle{opacity:0;transform:translate(-50%,12px);pointer-events:none}
 
 /* ---------- responsive ---------- */
 @media (max-width:1080px){
@@ -776,7 +779,6 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     const small = innerWidth < 700;
     const crew = [['Layout', '#ccff00'], ['Copy', '#0d99ff'], ['Image', '#ff4fd8'], ['Type', '#ffb020'],
       ['Grid', '#22e3ff'], ['Motion', '#9b6bff'], ['Pixel', '#ff7a30'], ['Flow', '#2fd3a7']].slice(0, small ? 5 : 8);
-    const darkLabel = ['#ccff00', '#ffb020', '#22e3ff', '#2fd3a7'];
     const stage = document.createElement('div'); stage.id = 'stage'; document.body.appendChild(stage);
     const doc = el => { const r = el.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; };
     const vis = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
@@ -830,12 +832,12 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
 
     const agents = crew.map(([name, color], i) => {
       const el = document.createElement('div'); el.className = 'ag'; el.style.setProperty('--c', color);
-      if (darkLabel.includes(color)) el.style.setProperty('--t', '#0b0d05');
-      el.innerHTML = `<svg width="18" height="20" viewBox="0 0 18 20"><path d="M1.5 1.5l14.5 7-6.4 1.9L6.3 17z" fill="${color}" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg><b>${name}</b>`;
+      el.innerHTML = `<svg width="13" height="15" viewBox="0 0 18 20"><path d="M1.5 1.5l14.5 7-6.4 1.9L6.3 17z" fill="${color}" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
       stage.appendChild(el);
       const a = { el, color, x: 0, y: 0, q: Promise.resolve(),
         set(x, y) { a.x = x; a.y = y; el.style.transform = `translate(${x}px,${y}px)`; },
         to(x, y, c, ms) {
+          el.classList.remove('down');
           const x0 = a.x, y0 = a.y, d = Math.hypot(x - x0, y - y0) || 1, bend = (i % 2 ? 1 : -1) * Math.min(60, d * .15);
           return tween(ms || Math.min(900, 220 + d * .45), k => {
             const e = ease(k), b = Math.sin(Math.PI * e) * bend;
@@ -1017,13 +1019,24 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         agents.forEach(a => a.set(innerWidth / 2 + scrollX + (Math.random() - .5) * 110, innerHeight * .45 + scrollY + (Math.random() - .5) * 80));
         stage.classList.add('on');
       }
-      c.state = 'run'; running++;
+      c.state = 'run'; running++; pill.classList.remove('idle');
       say(`${agents.length} وكلاء يبنون الآن · ${c.label[0]}`, `${agents.length} agents building · ${c.label[1]}`);
       const t = setTimeout(c.finish, 30000);
       try { await c.plan(c); } catch (_) {}
       clearTimeout(t); c.finish(); running--;
       if (ctxs.every(x => x.state === 'done')) done();
-      else if (!running) say('مرّر لأسفل، الطاقم جاهز', 'Scroll on, the crew is ready');
+      else if (!running) { pill.classList.add('idle'); gather(); }
+    }
+    /* between sections the whole crew lines up at the bottom of the screen and points down: keep scrolling.
+       It holds every agent the way a team does, so the next section's tasks start once they've arrived. */
+    function gather() {
+      const g = { rush: false }, n = agents.length, gap = small ? 16 : 20;
+      const cx = scrollX + innerWidth / 2, y = scrollY + innerHeight - (small ? 52 : 60);
+      const line = Promise.all(agents.map(a => a.q)).then(() => Promise.all(agents.map((a, i) => {
+        const off = i - (n - 1) / 2;
+        return a.to(cx + off * gap, y - Math.abs(off) * 5, g, 520 + i * 45).then(() => a.el.classList.add('down'));
+      }))).catch(() => {});
+      agents.forEach(a => { a.q = line; });
     }
     function done() {
       pill.classList.add('done');
