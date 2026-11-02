@@ -1106,15 +1106,13 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         const rr = rail.getBoundingClientRect();
         const shown = cards.filter(k => { const r = k.getBoundingClientRect(); return r.left >= rr.left - 2 && r.right <= rr.right + 2; }).slice(0, 4);
         if (!shown.length) shown.push(cards[0]);
-        const backs = new Map();
-        const cj = c.copies(shown,
-          async (a, k) => { await c.frame(a, k, 'Card / 01', 400); await c.image(a, shot(k), file(k)); await c.type(a, meta(k), { ms: 24 }); },
-          async (a, k, first) => { backs.set(k, c.borrow(shot(k), shot(first))); c.show(shot(k)); });
-        /* once a copy has landed, its title retype and its image drop are two jobs two agents take at the same time */
-        shown.slice(1).forEach((k, i) => {
-          c.job(a => c.type(a, meta(k), { from: meta(shown[0]), ms: 20 }), cj[i + 1]);
-          c.job(a => c.image(a, shot(k), file(k), backs.get(k)), cj[i + 1]);
-        });
+        /* every card on screen gets its own agent that builds it from scratch — frame, image, title — all at once;
+           the cards further along the rail stay as they are and simply appear when the section is done */
+        shown.forEach((k, i) => c.job(async a => {
+          await c.frame(a, k, 'Card / ' + String(cards.indexOf(k) + 1).padStart(2, '0'), 400);
+          await c.image(a, shot(k), file(k));
+          await c.type(a, meta(k), { ms: 24 });
+        }));
         c.job(a => c.guides(a));
         c.job(a => c.type(a, eb, { ms: 25 }));
         c.job(a => c.type(a, h2, { ms: 50 }));
