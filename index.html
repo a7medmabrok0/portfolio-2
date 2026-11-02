@@ -767,8 +767,9 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   function liveBuild() {
     const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
     const small = innerWidth < 700;
-    const crew = [['Layout', '#ccff00'], ['Copy', '#0d99ff'], ['Image', '#ff4fd8'], ['Type', '#ffb020']]
-      .slice(0, small ? 3 : 4);
+    const crew = [['Layout', '#ccff00'], ['Copy', '#0d99ff'], ['Image', '#ff4fd8'], ['Type', '#ffb020'],
+      ['Grid', '#22e3ff'], ['Motion', '#9b6bff'], ['Pixel', '#ff7a30'], ['Flow', '#2fd3a7']].slice(0, small ? 5 : 8);
+    const darkLabel = ['#ccff00', '#ffb020', '#22e3ff', '#2fd3a7'];
     const stage = document.createElement('div'); stage.id = 'stage'; document.body.appendChild(stage);
     const doc = el => { const r = el.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; };
     const vis = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
@@ -783,8 +784,10 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     /* one shared rAF loop drives every tween; a rushed context finishes its tweens on the spot */
     const tweens = new Set(); let looping = false;
     const loop = t => { tweens.forEach(f => f(t)); if (tweens.size) requestAnimationFrame(loop); else looping = false; };
+    const SPEED = 1.5;   /* every motion and pause runs this much faster than its nominal duration */
     const tween = (ms, fn, c) => new Promise(res => {
       if (c.rush) { fn(1); return res(); }
+      ms /= SPEED;
       const t0 = performance.now();
       const f = t => { const k = c.rush ? 1 : Math.min(1, (t - t0) / ms); fn(k); if (k >= 1) { tweens.delete(f); res(); } };
       tweens.add(f); if (!looping) { looping = true; requestAnimationFrame(loop); }
@@ -805,19 +808,11 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .005); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
       o.connect(g).connect(ac.destination); o.start(t); o.stop(t + dur + .02);
     };
-    /* a short burst of filtered noise: the body of a key press or a mouse click */
-    const burst = (dur, vol, freq, delay = 0) => {
-      const t = ac.currentTime + delay, n = Math.ceil(ac.sampleRate * dur), b = ac.createBuffer(1, n, ac.sampleRate), d = b.getChannelData(0);
-      for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
-      const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
-      s.buffer = b; f.type = 'bandpass'; f.frequency.value = freq; f.Q.value = .9; g.gain.value = vol;
-      s.connect(f).connect(g).connect(ac.destination); s.start(t);
-    };
-    /* three sounds only: keyboard while typing, mouse click, and a rising shimmer when something is generated */
+    /* three soft single tones, spaced out so a busy crew never gets noisy */
     const cues = {
-      key: [55, () => { burst(.03, .22, 2400 + Math.random() * 1400); tone(150 + Math.random() * 40, 90, .035, .03); }],
-      click: [70, () => { burst(.012, .35, 4200); burst(.01, .2, 3000, .045); }],
-      gen: [220, () => { tone(330, 990, .32, .022); tone(495, 1480, .32, .012); }]
+      key: [110, () => tone(1200 + Math.random() * 200, null, .02, .012)],
+      click: [120, () => tone(900, 600, .04, .025)],
+      gen: [300, () => tone(660, 990, .14, .018)]
     };
     const sfx = kind => {
       if (!sound || !ac || ac.state !== 'running' || document.hidden) return;
@@ -828,7 +823,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
 
     const agents = crew.map(([name, color], i) => {
       const el = document.createElement('div'); el.className = 'ag'; el.style.setProperty('--c', color);
-      if (color === '#ccff00' || color === '#ffb020') el.style.setProperty('--t', '#0b0d05');
+      if (darkLabel.includes(color)) el.style.setProperty('--t', '#0b0d05');
       el.innerHTML = `<svg width="18" height="20" viewBox="0 0 18 20"><path d="M1.5 1.5l14.5 7-6.4 1.9L6.3 17z" fill="${color}" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg><b>${name}</b>`;
       stage.appendChild(el);
       const a = { el, color, x: 0, y: 0, q: Promise.resolve(),
@@ -861,9 +856,16 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         if (!el) return; el.classList.remove('bw');
         if (anim && !c.rush) { el.classList.add(anim); setTimeout(() => el.classList.remove(anim), 800); }
       };
-      c.wait = ms => c.rush ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+      c.wait = ms => c.rush ? Promise.resolve() : new Promise(r => setTimeout(r, ms / SPEED));
       c.later = (n, ms) => setTimeout(() => { c.fx.delete(n); fade(n); }, c.rush ? 0 : ms);
-      c.with = (a, fn) => { const run = a.q.then(async () => { try { await fn(a); } catch (_) {} }); a.q = run; return run; };
+      /* a team holds all its agents at once: it starts when every member is free and keeps them until it's done,
+         so two tasks never steer the same cursor and no task ever waits on another agent's queue */
+      c.team = (team, fn) => {
+        team = [...new Set(team)];
+        const run = Promise.all(team.map(a => a.q)).then(async () => { try { await fn(...team); } catch (_) {} });
+        team.forEach(a => { a.q = run; }); return run;
+      };
+      c.with = (a, fn) => c.team([a], fn);
       c.box = (r, tag, cls) => {
         const f = document.createElement('div'); f.className = 'fr ' + (cls || '');
         f.style.cssText = `left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px`;
@@ -918,13 +920,16 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         const back = () => { di.forEach((im, k) => im.setAttribute('src', real[k])); c.undo.delete(back); };
         c.undo.add(back); return back;
       };
-      /* one component at a time: build the first, then each next one is a copy of the previous, edited */
-      c.series = async (a, items, make, edit) => {
+      /* the team's lead builds the first component alone; then every member takes copies of it in parallel and edits them */
+      c.series = async (team, items, make, edit) => {
         items = items.filter(Boolean); if (!items.length) return;
-        await make(items[0]);
-        for (let i = 1; i < items.length; i++) { await c.dup(a, items[i - 1], items[i]); await edit(items[i], items[i - 1]); }
+        const first = items[0], rest = items.slice(1);
+        await make(team[0], first);
+        await Promise.all(team.map(async (a, j) => {
+          for (let i = j; i < rest.length; i += team.length) { await c.dup(a, first, rest[i]); await edit(a, rest[i], first); }
+        }));
       };
-      c.retype = (a, o = {}) => (d, s) => c.type(a, d, { from: s, ms: 22, ...o });
+      c.retype = (o = {}) => (a, d, s) => c.type(a, d, { from: s, ms: 22, ...o });
       /* type el's visible text with a caret the cursor rides on; with `from`, first show src's text selected */
       c.type = async (a, el, o = {}) => {
         if (!el) return;
@@ -1027,8 +1032,10 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     $('.crew-skip', pill).addEventListener('click', () => { ctxs.forEach(c => c.finish()); done(); });
     document.getElementById('lang').addEventListener('click', () => ctxs.forEach(c => c.state === 'run' && c.finish()));
 
-    /* ---- section plans: every group of repeated components is one agent's job — it builds the first,
-       then makes each next one as a copy of the previous and edits it ---- */
+    /* ---- section plans: each section splits into tracks that run at the same time, each held by its own team.
+       A repeated group is always started by one agent building the first component; then the whole team
+       pastes copies of it in parallel and edits them. ---- */
+    const T = (...ix) => [...new Set(ix.map(A))];
     const hero = $('#home');
     {
       const c = ctx(hero, ['الواجهة', 'Hero']);
@@ -1036,27 +1043,22 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       const hello = $('.hello', hero), name = $('.name', hero), role = $('.role', hero), lede = $('.lede', hero);
       const ctas = $$('.cta-row .btn', hero), loc = $('.loc', hero), portrait = $('#portrait'), stats = $$('.stat', hero);
       c.hide(logo, links, tools, giant, hello, name, role, lede, ctas, loc, portrait, stats);
+      const button = (a, b) => c.frame(a, b, 'Button', 300).then(() => c.type(a, b, { ms: 35 }));
       c.plan = async () => {
-        await c.wait(900);
+        await c.wait(700);
         await Promise.all([
-          c.with(A(0), async a => {
-            await c.guides(a);
-            await c.frame(a, giant, 'PORTFOLIO', 500); await c.type(a, giant, { ms: 80 });
-            await c.series(a, stats, async s => { await c.frame(a, s, 'Stat', 400); await c.type(a, s); }, c.retype(a));
+          c.team(T(0), async a => { await c.guides(a); await c.frame(a, giant, 'PORTFOLIO', 400); await c.type(a, giant, { ms: 70 }); }),
+          c.team(T(1, 2), async (...m) => {
+            await c.type(m[0], logo, { ms: 40 });
+            await c.series(m, links, (a, l) => c.type(a, l, { ms: 35 }), c.retype({ ms: 35 }));
+            await c.series(m, tools, button, c.retype({ ms: 35 }));
           }),
-          c.with(A(1), async a => {
-            await c.type(a, logo, { ms: 45 });
-            await c.series(a, links, l => c.type(a, l, { ms: 40 }), c.retype(a, { ms: 40 }));
-            await c.series(a, tools, async t => { await c.frame(a, t, 'Button', 300); await c.type(a, t, { ms: 40 }); }, c.retype(a, { ms: 40 }));
-          }),
-          c.with(A(2), async a => {
-            await c.frame(a, portrait, 'Frame · Portrait', 600); await c.image(a, portrait, 'portrait.webp');
-            await c.series(a, ctas, async b => { await c.frame(a, b, 'Button', 300); await c.type(a, b, { ms: 40 }); }, c.retype(a, { ms: 35 }));
-            await c.type(a, loc, { ms: 14 });
-          }),
-          c.with(A(3), async a => {
-            await c.wait(400);
-            await c.type(a, hello, { ms: 50 }); await c.type(a, name, { ms: 60 }); await c.type(a, role); await c.type(a, lede, { ms: 9 });
+          c.team(T(3), async a => { await c.frame(a, portrait, 'Frame · Portrait', 500); await c.image(a, portrait, 'portrait.webp'); await c.type(a, loc, { ms: 14 }); }),
+          c.team(T(4), async a => { await c.type(a, hello, { ms: 45 }); await c.type(a, name, { ms: 55 }); }),
+          c.team(T(5), async a => { await c.wait(300); await c.type(a, role, { ms: 28 }); await c.type(a, lede, { ms: 8 }); }),
+          c.team(T(6, 7), async (...m) => {
+            await c.series(m, stats, (a, s) => c.frame(a, s, 'Stat', 300).then(() => c.type(a, s)), c.retype());
+            await c.series(m, ctas, button, c.retype({ ms: 30 }));
           })
         ]);
       };
@@ -1071,13 +1073,15 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         const shown = cards.filter(k => { const r = k.getBoundingClientRect(); return r.left >= rr.left - 2 && r.right <= rr.right + 2; }).slice(0, 4);
         if (!shown.length) shown.push(cards[0]);
         await Promise.all([
-          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 55 }); await c.type(a, sub, { ms: 12 }); }),
-          c.with(A(1), a => c.series(a, arrows, async b => { await c.frame(a, b, 'Icon button', 300); c.show(b, 'bin'); }, async b => c.show(b))),
-          c.with(A(2), a => c.series(a, shown,
-            async k => { await c.frame(a, k, 'Card / 01', 500); await c.image(a, shot(k), file(k)); await c.type(a, meta(k)); },
-            async (k, prev) => {
-              const back = c.borrow(shot(k), shot(prev)); c.show(shot(k));
-              await c.type(a, meta(k), { from: meta(prev), ms: 22 });
+          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); }),
+          c.team(T(1), a => c.type(a, h2, { ms: 50 })),
+          c.team(T(2), async a => { await c.wait(400); await c.type(a, sub, { ms: 10 }); }),
+          c.team(T(3), a => c.series([a], arrows, (a, b) => c.frame(a, b, 'Icon button', 300).then(() => c.show(b, 'bin')), async (a, b) => c.show(b))),
+          c.team(T(4, 5, 6, 7), (...m) => c.series(m, shown,
+            async (a, k) => { await c.frame(a, k, 'Card / 01', 400); await c.image(a, shot(k), file(k)); await c.type(a, meta(k), { ms: 24 }); },
+            async (a, k, first) => {
+              const back = c.borrow(shot(k), shot(first)); c.show(shot(k));
+              await c.type(a, meta(k), { from: meta(first), ms: 20 });
               await c.image(a, shot(k), file(k), back);
             }))
         ]);
@@ -1093,8 +1097,8 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         const m = mq.getBoundingClientRect();
         const inView = cos.filter(k => { const r = k.getBoundingClientRect(); return r.left >= m.left && r.right <= m.right; });
         await Promise.all([
-          c.with(A(0), a => c.type(a, label, { ms: 30 })),
-          c.with(A(1), a => c.series(a, inView, async k => { await c.frame(a, k, 'Logo', 300); await c.type(a, k, { ms: 45 }); }, c.retype(a, { ms: 40 })))
+          c.team(T(0), a => c.type(a, label, { ms: 28 })),
+          c.team(T(1, 2, 3, 4), (...t) => c.series(t, inView, (a, k) => c.frame(a, k, 'Logo', 300).then(() => c.type(a, k, { ms: 40 })), c.retype({ ms: 35 })))
         ]);
       };
     }
@@ -1104,32 +1108,13 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       c.hide(eb, h2, laurel, under, desc, rows);
       c.plan = async () => {
         await Promise.all([
-          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 60 }); }),
-          c.with(A(1), async a => {
-            await c.frame(a, laurel, 'Badge', 500); c.show(laurel, 'bin'); countUp($('[data-count]', laurel));
-            await c.type(a, under, { ms: 30 }); await c.type(a, desc, { ms: 12 });
+          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); }),
+          c.team(T(1), a => c.type(a, h2, { ms: 55 })),
+          c.team(T(2), async a => {
+            await c.frame(a, laurel, 'Badge', 400); c.show(laurel, 'bin'); countUp($('[data-count]', laurel));
+            await c.type(a, under, { ms: 28 }); await c.type(a, desc, { ms: 10 });
           }),
-          c.with(A(2), a => c.series(a, rows, async r => { await c.frame(a, r, 'Row / 01', 400); await c.type(a, r, { ms: 22 }); }, c.retype(a, { ms: 16 })))
-        ]);
-      };
-    }
-    {
-      const sec = $('#process'), c = ctx(sec, ['من الهيكل للواقع', 'Wire to real']);
-      const eb = $('.eyebrow', sec), h2 = $('h2', sec), p = $('p:not(.eyebrow)', sec), cmp = $('#compare'), range = $('#cmp');
-      c.hide(eb, h2, p, cmp);
-      c.after = () => cmp.style.setProperty('--pos', range.value + '%');
-      c.plan = async () => {
-        await Promise.all([
-          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 60 }); await c.type(a, p, { ms: 12 }); }),
-          c.with(A(1), async a => {
-            cmp.style.setProperty('--pos', '100%');
-            await c.frame(a, cmp, 'HR System / Wireframe', 500); await c.image(a, cmp, 'wireframe.webp');
-            if (c.rush) return;
-            const r = doc(cmp), at = v => [r.x + r.w * v / 100, r.y + r.h / 2];
-            await a.to(...at(100), c); a.click();
-            const slide = (from, to, ms) => tween(ms, k => { const v = from + (to - from) * ease(k); cmp.style.setProperty('--pos', v + '%'); a.set(...at(v)); }, c);
-            await slide(100, 18, 1100); await slide(18, +range.value, 700);
-          })
+          c.team(T(3, 4, 5, 6, 7), (...m) => c.series(m, rows, (a, r) => c.frame(a, r, 'Row / 01', 350).then(() => c.type(a, r, { ms: 20 })), c.retype({ ms: 16 })))
         ]);
       };
     }
@@ -1141,17 +1126,40 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       c.hide(eb, h2, intro, h3s, eduB, eduP, chips, steps, quote, qp, cite);
       c.plan = async () => {
         await Promise.all([
-          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 50 }); await c.type(a, intro, { ms: 10 }); }),
-          c.with(A(1), async a => {
-            await c.type(a, h3s[0], { ms: 35 });
-            for (const b of eduB) { await c.type(a, b, { ms: 30 }); const p = b.parentElement.querySelector('p'); if (p) await c.type(a, p, { ms: 14 }); }
-            await c.series(a, chips, async k => { await c.frame(a, k, 'Chip', 300); await c.type(a, k, { ms: 30 }); }, c.retype(a, { ms: 25 }));
+          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 45 }); }),
+          c.team(T(1), async a => { await c.wait(300); await c.type(a, intro, { ms: 9 }); }),
+          c.team(T(2), async a => {
+            await c.type(a, h3s[0], { ms: 30 });
+            for (const b of eduB) { await c.type(a, b, { ms: 28 }); const p = b.parentElement.querySelector('p'); if (p) await c.type(a, p, { ms: 12 }); }
           }),
-          c.with(A(2), async a => {
-            await c.type(a, h3s[1], { ms: 35 });
-            await c.series(a, steps, async s => { await c.frame(a, s, 'Step', 400); await c.type(a, s, { ms: 16 }); }, c.retype(a, { ms: 14 }));
+          c.team(T(3, 4), (...m) => c.series(m, chips, (a, k) => c.frame(a, k, 'Chip', 250).then(() => c.type(a, k, { ms: 28 })), c.retype({ ms: 22 }))),
+          c.team(T(5, 6), async (...m) => {
+            await c.type(m[0], h3s[1], { ms: 30 });
+            await c.series(m, steps, (a, s) => c.frame(a, s, 'Step', 350).then(() => c.type(a, s, { ms: 14 })), c.retype({ ms: 12 }));
           }),
-          c.with(A(3), async a => { await c.frame(a, quote, 'Quote', 500); c.show(quote, 'wipe'); await c.type(a, qp, { ms: 18 }); await c.type(a, cite, { ms: 40 }); })
+          c.team(T(7), async a => { await c.frame(a, quote, 'Quote', 400); c.show(quote, 'wipe'); await c.type(a, qp, { ms: 16 }); await c.type(a, cite, { ms: 35 }); })
+        ]);
+      };
+    }
+    {
+      const sec = $('#process'), c = ctx(sec, ['من الهيكل للواقع', 'Wire to real']);
+      const eb = $('.eyebrow', sec), h2 = $('h2', sec), p = $('p:not(.eyebrow)', sec), cmp = $('#compare'), range = $('#cmp');
+      c.hide(eb, h2, p, cmp);
+      c.after = () => cmp.style.setProperty('--pos', range.value + '%');
+      c.plan = async () => {
+        await Promise.all([
+          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); }),
+          c.team(T(1), a => c.type(a, h2, { ms: 55 })),
+          c.team(T(3), async a => { await c.wait(400); await c.type(a, p, { ms: 10 }); }),
+          c.team(T(2), async a => {
+            cmp.style.setProperty('--pos', '100%');
+            await c.frame(a, cmp, 'HR System / Wireframe', 400); await c.image(a, cmp, 'wireframe.webp');
+            if (c.rush) return;
+            const r = doc(cmp), at = v => [r.x + r.w * v / 100, r.y + r.h / 2];
+            await a.to(...at(100), c); a.click();
+            const slide = (from, to, ms) => tween(ms, k => { const v = from + (to - from) * ease(k); cmp.style.setProperty('--pos', v + '%'); a.set(...at(v)); }, c);
+            await slide(100, 18, 1100); await slide(18, +range.value, 700);
+          })
         ]);
       };
     }
@@ -1162,16 +1170,19 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       c.hide(eb, h2, jobs, h3s, tl, sectors);
       c.plan = async () => {
         await Promise.all([
-          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 55 }); }),
-          c.with(A(1), a => c.series(a, jobs,
-            async j => { await c.frame(a, j, 'Role / 01', 400); await c.type(a, j, { ms: 9, max: 1600 }); },
-            async (j, prev) => { c.show(j); await c.type(a, $('button', j), { from: $('button', prev), ms: 20 }); })),
-          c.with(A(2), async a => {
-            await c.type(a, h3s[0], { ms: 35 });
-            await c.series(a, tl, async t => { await c.frame(a, t, 'Icon', 300); await c.image(a, t, icon(t)); },
-              async (t, prev) => { const back = c.borrow(t, prev); c.show(t); await c.image(a, t, icon(t), back); });
-            await c.type(a, h3s[1], { ms: 35 });
-            await c.series(a, sectors, s => c.type(a, s, { ms: 20 }), c.retype(a, { ms: 18 }));
+          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); }),
+          c.team(T(1), a => c.type(a, h2, { ms: 50 })),
+          c.team(T(2, 3, 4), (...m) => c.series(m, jobs,
+            (a, j) => c.frame(a, j, 'Role / 01', 350).then(() => c.type(a, j, { ms: 8, max: 1400 })),
+            async (a, j, first) => { c.show(j); await c.type(a, $('button', j), { from: $('button', first), ms: 18 }); })),
+          c.team(T(5, 6), async (...m) => {
+            await c.type(m[0], h3s[0], { ms: 30 });
+            await c.series(m, tl, (a, t) => c.frame(a, t, 'Icon', 250).then(() => c.image(a, t, icon(t))),
+              async (a, t, first) => { const back = c.borrow(t, first); c.show(t); await c.image(a, t, icon(t), back); });
+          }),
+          c.team(T(7), async a => {
+            await c.type(a, h3s[1], { ms: 30 });
+            await c.series([a], sectors, (a, s) => c.type(a, s, { ms: 18 }), c.retype({ ms: 16 }));
           })
         ]);
       };
@@ -1183,19 +1194,17 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
       c.hide(eb, h2, pitch, btn, ways, poster, pd, foot);
       c.plan = async () => {
         await Promise.all([
-          c.with(A(0), async a => {
-            await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 60 }); await c.type(a, pitch, { ms: 14 });
-            await c.frame(a, btn, 'Button', 300); await c.type(a, btn, { ms: 35 });
-          }),
-          c.with(A(1), a => c.series(a, ways, async w => { await c.frame(a, w, 'Link / Email', 400); await c.type(a, w, { ms: 20 }); }, c.retype(a, { ms: 16 }))),
-          c.with(A(2), async a => { await c.frame(a, poster, 'Poster', 500); c.show(poster, 'wipe'); await c.type(a, pd, { ms: 50 }); }),
-          c.with(A(3), async a => { for (const f of foot) await c.type(a, f, { ms: 16 }); })
+          c.team(T(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 55 }); }),
+          c.team(T(1), async a => { await c.wait(300); await c.type(a, pitch, { ms: 12 }); await c.frame(a, btn, 'Button', 300); await c.type(a, btn, { ms: 30 }); }),
+          c.team(T(2, 3, 4), (...m) => c.series(m, ways, (a, w) => c.frame(a, w, 'Link / Email', 350).then(() => c.type(a, w, { ms: 18 })), c.retype({ ms: 14 }))),
+          c.team(T(5), async a => { await c.frame(a, poster, 'Poster', 400); c.show(poster, 'wipe'); await c.type(a, pd, { ms: 45 }); }),
+          c.team(T(6, 7), async (...m) => { await Promise.all(foot.map((f, i) => c.type(m[i % m.length], f, { ms: 14 }))); })
         ]);
         /* finale: once the whole page is up, the crew circles the poster */
         if (c.rush || !ctxs.every(x => x === c || x.state === 'done') || !vis(poster)) return;
         const r = doc(poster), cx = r.x + r.w / 2, cy = r.y + r.h / 2, R = Math.min(r.w, r.h) * .32;
-        await Promise.all(agents.map((ag, i) => c.with(ag, async a => {
-          const t0 = i / agents.length * Math.PI * 2;
+        await c.team(agents, (...all) => Promise.all(all.map(async (a, i) => {
+          const t0 = i / all.length * Math.PI * 2;
           await a.to(cx + Math.cos(t0) * R, cy + Math.sin(t0) * R, c);
           await tween(1600, k => { const t = t0 + ease(k) * Math.PI * 2; a.set(cx + Math.cos(t) * R, cy + Math.sin(t) * R); }, c);
         })));
