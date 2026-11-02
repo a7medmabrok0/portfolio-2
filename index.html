@@ -1106,13 +1106,22 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         const rr = rail.getBoundingClientRect();
         const shown = cards.filter(k => { const r = k.getBoundingClientRect(); return r.left >= rr.left - 2 && r.right <= rr.right + 2; }).slice(0, 4);
         if (!shown.length) shown.push(cards[0]);
-        /* every card on screen gets its own agent that builds it from scratch — frame, image, title — all at once;
-           the cards further along the rail stay as they are and simply appear when the section is done */
-        shown.forEach((k, i) => c.job(async a => {
+        /* the first cards on screen are built from scratch at the same time, each by its own agent (two when three or
+           more fit, otherwise one). Every card after that is a copy of one of them: an agent drags the copy into place,
+           then one agent retypes its title while another drops in its image. Cards further along the rail just appear. */
+        const fresh = shown.length >= 3 ? 2 : 1;
+        const built = shown.slice(0, fresh).map(k => c.job(async a => {
           await c.frame(a, k, 'Card / ' + String(cards.indexOf(k) + 1).padStart(2, '0'), 400);
           await c.image(a, shot(k), file(k));
           await c.type(a, meta(k), { ms: 24 });
         }));
+        const backs = new Map();
+        shown.slice(fresh).forEach((k, i) => {
+          const src = shown[i % fresh];
+          const copy = c.job(async a => { await c.dup(a, src, k); backs.set(k, c.borrow(shot(k), shot(src))); c.show(shot(k)); }, built[i % fresh]);
+          c.job(a => c.type(a, meta(k), { from: meta(src), ms: 20 }), copy);
+          c.job(a => c.image(a, shot(k), file(k), backs.get(k)), copy);
+        });
         c.job(a => c.guides(a));
         c.job(a => c.type(a, eb, { ms: 25 }));
         c.job(a => c.type(a, h2, { ms: 50 }));
