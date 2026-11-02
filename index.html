@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ahmed Mabrouk Portfolio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<script>(function(){var r=document.documentElement,l='ar';try{l=localStorage.getItem('mabroukui-v2-lang')||'ar'}catch(e){}r.lang=l;r.dir=l==='en'?'ltr':'rtl';if(/[?&]font=alexandria/.test(location.search))r.classList.add('font-alexandria');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('build');setTimeout(function(){r.classList.add('ready')},3000)}})();</script>
+<script>(function(){var r=document.documentElement,l='ar';try{l=localStorage.getItem('mabroukui-v2-lang')||'ar'}catch(e){}r.lang=l;r.dir=l==='en'?'ltr':'rtl';var fq=(location.search.match(/[?&]font=(alexandria|serif)/)||[])[1];if(fq)r.classList.add('font-'+fq);if(!matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('build');setTimeout(function(){r.classList.add('ready')},3000)}})();</script>
 <meta name="description" content="Ahmed Mabrouk — Senior UI/UX & Product Designer specializing in Enterprise SaaS, ERP systems, complex dashboards and AI-powered products.">
 <meta property="og:title" content="Ahmed Mabrouk | Senior UI/UX &amp; Product Designer">
 <meta property="og:description" content="Enterprise SaaS, ERP systems, complex dashboards and AI-powered products.">
@@ -20,6 +20,9 @@
 @font-face{font-family:Ping;src:url('assets/fonts/alfont_com_PingARLT-Bold.otf') format('opentype');font-weight:700;font-display:swap}
 @font-face{font-family:Thmanyah;src:url('assets/fonts/thmanyahseriftext-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:Thmanyah;src:url('assets/fonts/thmanyahseriftext-Bold.woff2') format('woff2');font-weight:700 900;font-display:swap}
+@font-face{font-family:ThmanyahSans;src:url('assets/fonts/thmanyahsans-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:ThmanyahSans;src:url('assets/fonts/thmanyahsans-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:ThmanyahSans;src:url('assets/fonts/thmanyahsans-Black.woff2') format('woff2');font-weight:800 900;font-display:swap}
 
 /* Layout: a cinematic dark scroll — giant poster hero, then full-bleed bands on a 12-col grid, fluorescent lime used only for emphasis words, numbers and the timeline spine. */
 :root{
@@ -35,11 +38,13 @@
   --blue:#96b4e6;         /* blueprint lines */
   --fig:#0d99ff;          /* editor selection blue for the build crew */
   --display-en:"Anton","Alexandria",Impact,"Arial Narrow",sans-serif;
-  /* Arabic headings use Thmanyah (from the first portfolio). To go back to Alexandria, point --display-ar at
-     --display-ar-alexandria; to compare without editing, open the page with ?font=alexandria. */
-  --display-ar-thmanyah:Thmanyah,"Alexandria",Tahoma,serif;
+  /* Arabic headings use Thmanyah Sans. The other two looks stay defined: point --display-ar at
+     --display-ar-serif (Thmanyah Serif, the first portfolio's) or --display-ar-alexandria to switch back;
+     to compare without editing, open the page with ?font=serif or ?font=alexandria. */
+  --display-ar-sans:ThmanyahSans,"Alexandria",Tahoma,sans-serif;
+  --display-ar-serif:Thmanyah,"Alexandria",Tahoma,serif;
   --display-ar-alexandria:"Alexandria","Anton",Tahoma,sans-serif;
-  --display-ar:var(--display-ar-thmanyah);
+  --display-ar:var(--display-ar-sans);
   --script-en:"Caveat Brush","Aref Ruqaa",cursive;
   --script-ar:"Aref Ruqaa","Caveat Brush",serif;
   --body-ar:Ping,"IBM Plex Sans Arabic",Tahoma,sans-serif;
@@ -49,8 +54,10 @@
   color-scheme:dark;
 }
 html.font-alexandria{--display-ar:var(--display-ar-alexandria)}
+html.font-serif{--display-ar:var(--display-ar-serif)}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;background:var(--ink)}
+/* stylistic alternates on for every font (Thmanyah Sans/Serif and Ping all ship a salt feature); inherited everywhere */
+html{scroll-behavior:smooth;background:var(--ink);font-feature-settings:"salt" 1}
 body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body-ar);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 html[lang=en] body{font-family:var(--body-en)}
 html[lang=ar] .en,html[lang=en] .ar{display:none!important}
@@ -60,6 +67,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 :focus-visible{outline:2px solid var(--acc-hot);outline-offset:3px}
 .wrap{width:min(100%,1320px);margin-inline:auto;padding-left:var(--gut);padding-right:var(--gut-r)}
 .display{font-family:var(--display-ar);font-weight:900;line-height:1.02;letter-spacing:-.01em;text-wrap:balance;margin:0}
+/* Arabic letters join, so no tracking; a touch more leading for the sans' tall alifs and deep descenders */
+html[lang=ar] .display{letter-spacing:0;line-height:1.12}
 html[lang=en] .display{font-family:var(--display-en);font-weight:400;text-transform:uppercase;letter-spacing:.005em;line-height:.95}
 .hi{color:var(--acc)}
 .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;align-items:center;margin:0 0 18px}
@@ -91,7 +100,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .portrait img{width:100%;height:auto;filter:contrast(1.08) brightness(.95);-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 72%,transparent 100%)}
 .hero-copy{position:relative;z-index:2;align-self:end;padding-top:clamp(140px,17vw,250px);max-width:420px}
 .hello{font-family:var(--script-ar);font-size:clamp(30px,3.4vw,46px);color:var(--text);line-height:1;margin:0 0 6px;transform:rotate(-4deg);transform-origin:right}
-html[lang=ar] .hello{font-family:Thmanyah,var(--script-ar);font-weight:400;font-size:clamp(22px,2.3vw,32px);color:#c4c8d6;transform:none;margin-bottom:12px}
+html[lang=ar] .hello{font-family:var(--display-ar);font-weight:400;font-size:clamp(22px,2.3vw,32px);color:#c4c8d6;transform:none;margin-bottom:12px}
 html[lang=en] .hello{font-family:var(--script-en);transform-origin:left}
 .name{font-size:clamp(48px,6.2vw,92px)}
 .name .dot{color:var(--acc)}
@@ -400,7 +409,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   <div class="wrap">
     <div class="hero-copy">
       <p class="hello"><span class="ar">أهلاً، أنا</span><span class="en">Hello, I'm</span></p>
-      <h1 class="display name"><span class="ar">أحمد مبروك<span class="dot">.</span></span><span class="en">Ahmed<br>Mabrouk<span class="dot">.</span></span></h1>
+      <h1 class="display name"><span class="ar">أحمــد مبــروك<span class="dot">.</span></span><span class="en">Ahmed<br>Mabrouk<span class="dot">.</span></span></h1>
       <p class="role"><span class="ar">مصمم UI/UX أول<br>ومصمم منتجات رقمية</span><span class="en">Senior UI/UX &amp;<br>Product Designer</span></p>
       <p class="lede"><span class="ar">أصمم المنتجات الرقمية المعقدة وواسعة النطاق: أنظمة ERP، لوحات تحكم كثيفة البيانات، منصات SaaS ومنتجات الذكاء الاصطناعي، وأحوّلها لتجارب واضحة وسهلة.</span><span class="en">I design complex, large-scale digital products — ERP systems, data-heavy dashboards, SaaS platforms and AI products — and turn them into clear, usable experiences.</span></p>
       <div class="cta-row">
@@ -424,7 +433,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     <div class="sec-head">
       <div>
         <p class="eyebrow"><b>01</b> / <span class="ar">أعمال مختارة</span><span class="en">Selected work</span></p>
-        <h2 class="display"><span class="ar">أعمال <span class="hi">تتكلم.</span></span><span class="en">Work that <span class="hi">speaks.</span></span></h2>
+        <h2 class="display"><span class="ar">أعمــال <span class="hi">تتكــلم.</span></span><span class="en">Work that <span class="hi">speaks.</span></span></h2>
         <p class="sub"><span class="ar">مختارات من أنظمة ولوحات تحكم وتطبيقات ومواقع صممتها، من الفكرة للواجهة النهائية.</span><span class="en">A selection of systems, dashboards, apps and websites I've designed, from first idea to final UI.</span></p>
       </div>
       <div class="arrows">
@@ -452,7 +461,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   <div class="wrap">
     <div>
       <p class="eyebrow"><b>02</b> / <span class="ar">النطاق والأثر</span><span class="en">Scope &amp; impact</span></p>
-      <h2 class="display"><span class="ar">الشغل.<br><span class="hi">والأثر.</span></span><span class="en">The work.<br><span class="hi">The impact.</span></span></h2>
+      <h2 class="display"><span class="ar">الشغــل.<br><span class="hi">والأثــر.</span></span><span class="en">The work.<br><span class="hi">The impact.</span></span></h2>
       <div class="laurel">
         <svg viewBox="0 0 46 84" fill="currentColor" aria-hidden="true"><path d="M40 82C18 72 6 52 8 26l3 1C10 51 21 69 41 79z"/><ellipse cx="10" cy="20" rx="4" ry="9" transform="rotate(-12 10 20)"/><ellipse cx="5" cy="36" rx="4" ry="9" transform="rotate(-40 5 36)"/><ellipse cx="8" cy="52" rx="4" ry="9" transform="rotate(-62 8 52)"/><ellipse cx="17" cy="66" rx="4" ry="9" transform="rotate(-78 17 66)"/></svg>
         <strong data-count="60">60<sup>+</sup></strong>
@@ -478,7 +487,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     <div class="top-row">
       <div>
         <p class="eyebrow"><b>03</b> / <span class="ar">خلف الشاشات</span><span class="en">Behind the screens</span></p>
-        <h2 class="display"><span class="ar">ليست مجرد واجهات.<br>بل تجربة <span class="hi">واضحة.</span></span><span class="en">Not just screens.<br>It's <span class="hi">clarity.</span></span></h2>
+        <h2 class="display"><span class="ar">ليست مجــرد واجهــات.<br>بل تجربــة <span class="hi">واضحــة.</span></span><span class="en">Not just screens.<br>It's <span class="hi">clarity.</span></span></h2>
       </div>
       <p class="intro"><span class="ar">أنا أحمد مبروك، مصمم UX/UI ومصمم منتجات من مصر. أركز على تحويل العمليات والمعلومات المعقدة إلى تجارب منظمة، تربط احتياجات المستخدم بأهداف المنتج وقابلية التنفيذ.</span><span class="en">I'm Ahmed Mabrouk, a UX/UI and product designer from Egypt. I turn complex processes and information into organized experiences that balance user needs, business goals and technical feasibility.</span></p>
     </div>
@@ -487,7 +496,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
         <h3><span class="ar">المهارات والتخصص</span><span class="en">Skills &amp; focus</span></h3>
         <div class="edu">
           <div><b><span class="ar">التخصص</span><span class="en">Focus</span></b><p><span class="ar">Enterprise SaaS، أنظمة ERP، لوحات تحكم معقدة ومنتجات AI.</span><span class="en">Enterprise SaaS, ERP systems, complex dashboards and AI products.</span></p></div>
-          <div><b><span class="ar">نقطة القوة</span><span class="en">Strength</span></b><p><span class="ar">تبسيط الـ workflows وتنظيم المنتجات كثيفة البيانات.</span><span class="en">Simplifying workflows and organizing data-heavy products.</span></p></div>
+          <div><b><span class="ar">نقطة القوة</span><span class="en">Strength</span></b><p><span class="ar">تبسيط الــ workflows وتنظيم المنتجات كثيفة البيانات.</span><span class="en">Simplifying workflows and organizing data-heavy products.</span></p></div>
           <div><b><span class="ar">الأدوات</span><span class="en">Toolkit</span></b>
             <div class="chips"><span>UI Prototyping</span><span>Wireframing</span><span>Design System</span><span>Auto Layout</span><span>Variables</span><span>Vibe Coding</span></div>
           </div>
@@ -515,7 +524,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   <div class="wrap">
     <div>
       <p class="eyebrow"><b>04</b> / <span class="ar">تحت السطح</span><span class="en">A look under the surface</span></p>
-      <h2 class="display"><span class="ar">من الهيكل.<br><span class="hi">للواقع.</span></span><span class="en">From wire.<br><span class="hi">To real.</span></span></h2>
+      <h2 class="display"><span class="ar">من الهيكــل.<br><span class="hi">للواقــع.</span></span><span class="en">From wire.<br><span class="hi">To real.</span></span></h2>
       <p><span class="ar">نظام موارد بشرية كامل، من خطوط الهيكل الأولى إلى الواجهة النهائية. اسحب المؤشر وشاهد الفرق.</span><span class="en">A full HR system, from the first structural lines to the shipped interface. Drag the handle to compare.</span></p>
     </div>
     <div class="compare" id="compare">
@@ -533,7 +542,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   <div class="wrap">
     <div>
       <p class="eyebrow"><b>05</b> / <span class="ar">الرحلة</span><span class="en">The journey</span></p>
-      <h2 class="display"><span class="ar">خطوات صغيرة.<br><span class="hi">أثر كبير.</span></span><span class="en">Little steps.<br><span class="hi">Big products.</span></span></h2>
+      <h2 class="display"><span class="ar">خطــوات صغيــرة.<br><span class="hi">أثــر كبيــر.</span></span><span class="en">Little steps.<br><span class="hi">Big products.</span></span></h2>
       <div class="timeline" id="timeline">
         <div class="job open">
           <button type="button" aria-expanded="true"><time>09/2024 — <span class="ar">الآن</span><span class="en">Now</span></time><h3>UX/UI Designer<small>Wakeb Data · <span class="ar">السعودية</span><span class="en">Saudi Arabia</span></small></h3><span class="plus"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span></button>
@@ -597,7 +606,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
   <div class="wrap">
     <div>
       <p class="eyebrow"><b>06</b> / <span class="ar">مشروعك القادم</span><span class="en">Your next product</span></p>
-      <h2 class="display"><span class="ar">لنعمل<br>معًا<span class="hi">.</span></span><span class="en">Let's work<br>together<span class="hi">.</span></span></h2>
+      <h2 class="display"><span class="ar">لنعمــل<br>معًا<span class="hi">.</span></span><span class="en">Let's work<br>together<span class="hi">.</span></span></h2>
       <p class="pitch"><span class="ar">لديك منتج معقد يحتاج أن يكون أوضح؟ أخبرني عنه ولنبدأ.</span><span class="en">Got a complex product that needs to feel clear? Tell me about it.</span></p>
       <a class="btn" href="https://wa.me/201113949916" target="_blank" rel="noopener"><span class="ar">ابدأ المحادثة</span><span class="en">Start a conversation</span> ↗</a>
     </div>
@@ -611,7 +620,7 @@ html[dir=rtl] .crew{padding:7px 14px 7px 7px}
     <div class="poster" id="poster">
       <canvas id="planes" aria-hidden="true"></canvas>
       <span class="rec"><i></i> mabroukui.com</span>
-      <p class="display"><span class="ar">اجعلها<br><span class="hi">أوضح.</span></span><span class="en">Make it<br><span class="hi">feel clear.</span></span></p>
+      <p class="display"><span class="ar">اجعلــها<br><span class="hi">أوضــح.</span></span><span class="en">Make it<br><span class="hi">feel clear.</span></span></p>
     </div>
   </div>
 </section>
