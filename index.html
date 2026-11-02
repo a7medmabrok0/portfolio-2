@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ahmed Mabrouk Portfolio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<script>(function(){var r=document.documentElement,l='ar';try{l=localStorage.getItem('mabroukui-v2-lang')||'ar'}catch(e){}r.lang=l;r.dir=l==='en'?'ltr':'rtl';if(!matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('build');setTimeout(function(){r.classList.add('ready')},3000)}})();</script>
+<script>(function(){var r=document.documentElement,l='ar';try{l=localStorage.getItem('mabroukui-v2-lang')||'ar'}catch(e){}r.lang=l;r.dir=l==='en'?'ltr':'rtl';if(/[?&]font=alexandria/.test(location.search))r.classList.add('font-alexandria');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('build');setTimeout(function(){r.classList.add('ready')},3000)}})();</script>
 <meta name="description" content="Ahmed Mabrouk — Senior UI/UX & Product Designer specializing in Enterprise SaaS, ERP systems, complex dashboards and AI-powered products.">
 <meta property="og:title" content="Ahmed Mabrouk | Senior UI/UX &amp; Product Designer">
 <meta property="og:description" content="Enterprise SaaS, ERP systems, complex dashboards and AI-powered products.">
@@ -18,6 +18,8 @@
 @font-face{font-family:Ping;src:url('assets/fonts/alfont_com_PingARLT-Regular.otf') format('opentype');font-weight:400;font-display:swap}
 @font-face{font-family:Ping;src:url('assets/fonts/alfont_com_PingARLT-Medium.otf') format('opentype');font-weight:500;font-display:swap}
 @font-face{font-family:Ping;src:url('assets/fonts/alfont_com_PingARLT-Bold.otf') format('opentype');font-weight:700;font-display:swap}
+@font-face{font-family:Thmanyah;src:url('assets/fonts/thmanyahseriftext-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Thmanyah;src:url('assets/fonts/thmanyahseriftext-Bold.woff2') format('woff2');font-weight:700 900;font-display:swap}
 
 /* Layout: a cinematic dark scroll — giant poster hero, then full-bleed bands on a 12-col grid, fluorescent lime used only for emphasis words, numbers and the timeline spine. */
 :root{
@@ -33,7 +35,11 @@
   --blue:#96b4e6;         /* blueprint lines */
   --fig:#0d99ff;          /* editor selection blue for the build crew */
   --display-en:"Anton","Alexandria",Impact,"Arial Narrow",sans-serif;
-  --display-ar:"Alexandria","Anton",Tahoma,sans-serif;
+  /* Arabic headings use Thmanyah (from the first portfolio). To go back to Alexandria, point --display-ar at
+     --display-ar-alexandria; to compare without editing, open the page with ?font=alexandria. */
+  --display-ar-thmanyah:Thmanyah,"Alexandria",Tahoma,serif;
+  --display-ar-alexandria:"Alexandria","Anton",Tahoma,sans-serif;
+  --display-ar:var(--display-ar-thmanyah);
   --script-en:"Caveat Brush","Aref Ruqaa",cursive;
   --script-ar:"Aref Ruqaa","Caveat Brush",serif;
   --body-ar:Ping,"IBM Plex Sans Arabic",Tahoma,sans-serif;
@@ -42,6 +48,7 @@
   --gut-r:max(16px,env(safe-area-inset-right,0px));
   color-scheme:dark;
 }
+html.font-alexandria{--display-ar:var(--display-ar-alexandria)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--ink)}
 body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body-ar);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
