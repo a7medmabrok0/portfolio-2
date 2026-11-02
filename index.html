@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ahmed Mabrouk Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<script>(function(){var r=document.documentElement,l='ar';try{l=localStorage.getItem('mabroukui-v2-lang')||'ar'}catch(e){}r.lang=l;r.dir=l==='en'?'ltr':'rtl';if(!matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('build');setTimeout(function(){r.classList.add('ready')},3000)}})();</script>
+<meta name="description" content="Ahmed Mabrouk — Senior UI/UX & Product Designer specializing in Enterprise SaaS, ERP systems, complex dashboards and AI-powered products.">
+<meta property="og:title" content="Ahmed Mabrouk | Senior UI/UX &amp; Product Designer">
+<meta property="og:description" content="Enterprise SaaS, ERP systems, complex dashboards and AI-powered products.">
+<meta property="og:image" content="https://v2.mabroukui.com/assets/share-cover-en.jpg">
+<link rel="icon" type="image/png" href="assets/site-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Alexandria:wght@800;900&family=Aref+Ruqaa:wght@700&family=Caveat+Brush&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+@font-face{font-family:Ping;src:url('assets/fonts/alfont_com_PingARLT-Regular.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:Ping;src:url('assets/fonts/alfont_com_PingARLT-Medium.otf') format('opentype');font-weight:500;font-display:swap}
+@font-face{font-family:Ping;src:url('assets/fonts/alfont_com_PingARLT-Bold.otf') format('opentype');font-weight:700;font-display:swap}
+
+/* Layout: a cinematic dark scroll — giant poster hero, then full-bleed bands on a 12-col grid, red used only for emphasis words, numbers and the timeline spine. */
+:root{
+  --ink:#07080d;          /* page */
+  --panel:#0e1019;        /* raised bands */
+  --line:#1c1f2e;         /* hairlines */
+  --text:#eef0f6;
+  --muted:#8b90a5;
+  --red:#ec2340;
+  --red-hot:#ff3a55;
+  --red-deep:#5c0a17;
+  --blue:#96b4e6;         /* blueprint lines */
+  --fig:#0d99ff;          /* editor selection blue for the build crew */
+  --display-en:"Anton","Alexandria",Impact,"Arial Narrow",sans-serif;
+  --display-ar:"Alexandria","Anton",Tahoma,sans-serif;
+  --script-en:"Caveat Brush","Aref Ruqaa",cursive;
+  --script-ar:"Aref Ruqaa","Caveat Brush",serif;
+  --body-ar:Ping,"IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --body-en:"DM Sans",Ping,Arial,sans-serif;
+  --gut:max(16px,env(safe-area-inset-left,0px));
+  --gut-r:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body-ar);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html[lang=en] body{font-family:var(--body-en)}
+html[lang=ar] .en,html[lang=en] .ar{display:none!important}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--red-hot);outline-offset:3px}
+.wrap{width:min(100%,1320px);margin-inline:auto;padding-left:var(--gut);padding-right:var(--gut-r)}
+.display{font-family:var(--display-ar);font-weight:900;line-height:1.02;letter-spacing:-.01em;text-wrap:balance;margin:0}
+html[lang=en] .display{font-family:var(--display-en);font-weight:400;text-transform:uppercase;letter-spacing:.005em;line-height:.95}
+.red{color:var(--red)}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;align-items:center;margin:0 0 18px}
+.eyebrow b{color:var(--red);font-weight:700}
+html[lang=ar] .eyebrow{letter-spacing:0;font-size:13px}
+.num{font-family:var(--display-en);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+
+/* ---------- header ---------- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--ink) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:24px;height:64px}
+.logo{font-family:var(--display-en);font-size:22px;letter-spacing:.02em;display:flex;align-items:center;gap:6px;direction:ltr}
+.logo i{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block;box-shadow:0 0 12px var(--red)}
+.nav{display:flex;gap:26px;margin-inline-start:auto;font-size:14px;color:var(--muted)}
+.nav a{transition:color .2s}.nav a:hover{color:var(--text)}
+.top-tools{display:flex;gap:10px;align-items:center}
+.lang{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;color:var(--muted);transition:border-color .2s,color .2s}
+.lang:hover{border-color:var(--muted);color:var(--text)}
+.talk{font-size:13px;font-weight:700;background:var(--text);color:var(--ink);border-radius:999px;padding:8px 16px;display:inline-flex;gap:6px;align-items:center}
+.talk:hover{background:var(--red);color:#fff}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(60% 70% at 50% 35%,rgba(236,35,64,.18),transparent 70%),radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 1.4px) 0 0/28px 28px}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,.5fr);align-items:end;min-height:min(820px,calc(100svh - 64px));padding-block:40px 36px;gap:24px}
+.giant{position:absolute;inset-inline:0;top:5%;z-index:-1;text-align:center;font-family:var(--display-en);font-size:clamp(110px,23.5vw,360px);line-height:.82;letter-spacing:-.01em;direction:ltr;white-space:nowrap;
+  background:linear-gradient(180deg,var(--red-hot) 0%,var(--red) 38%,var(--red-deep) 78%,transparent 100%);-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;pointer-events:none;will-change:transform}
+.portrait{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,48vw);z-index:0;pointer-events:none}
+.portrait img{width:100%;height:auto;filter:contrast(1.08) brightness(.95);-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 72%,transparent 100%)}
+.hero-copy{position:relative;z-index:2;align-self:end;padding-top:clamp(140px,17vw,250px);max-width:420px}
+.hello{font-family:var(--script-ar);font-size:clamp(30px,3.4vw,46px);color:var(--text);line-height:1;margin:0 0 6px;transform:rotate(-4deg);transform-origin:right}
+html[lang=en] .hello{font-family:var(--script-en);transform-origin:left}
+.name{font-size:clamp(48px,6.2vw,92px)}
+.name .dot{color:var(--red)}
+.role{font-family:var(--display-ar);font-weight:800;color:var(--red);font-size:clamp(17px,1.6vw,22px);line-height:1.25;margin:14px 0 16px}
+html[lang=en] .role{font-family:var(--display-en);font-weight:400;text-transform:uppercase;letter-spacing:.02em}
+.lede{color:#c4c8d6;margin:0 0 22px;font-size:15px;max-width:44ch}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:14px;padding:13px 20px;background:var(--red);color:#fff;border-radius:2px;transition:background .2s,transform .2s}
+.btn:hover{background:var(--red-hot);transform:translateY(-2px)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+.btn.ghost:hover{border-color:var(--text)}
+.loc{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);margin-top:20px}
+.live{width:8px;height:8px;border-radius:50%;background:#2ee08a;box-shadow:0 0 0 0 rgba(46,224,138,.6);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 9px rgba(46,224,138,0)}100%{box-shadow:0 0 0 0 rgba(46,224,138,0)}}
+.stats{grid-column:3;position:relative;z-index:2;display:grid;gap:22px;align-self:end;padding-bottom:60px;justify-items:end}
+html[lang=ar] .stats{justify-items:start}
+.stat{display:grid;grid-template-columns:auto auto;align-items:center;gap:12px}
+.stat strong{direction:ltr;unicode-bidi:isolate;font-family:var(--display-en);font-weight:400;font-size:clamp(40px,4vw,58px);line-height:.9;color:var(--red);font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted);line-height:1.35;max-width:9ch}
+.scroll-hint{position:absolute;bottom:22px;inset-inline-start:50%;translate:-50% 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px}
+html[dir=rtl] .scroll-hint{translate:50% 0}
+.scroll-hint::after{content:"";width:1px;height:28px;background:linear-gradient(var(--red),transparent);animation:drip 1.8s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.corner{position:absolute;top:28px;inset-inline-end:var(--gut);font-size:11px;color:var(--muted);text-align:end;line-height:1.5;z-index:3;letter-spacing:.06em;text-transform:uppercase}
+
+/* load sequence */
+.hero .giant{animation:rise 1.2s cubic-bezier(.2,.8,.2,1) both}
+.hero .portrait{animation:fadeUp 1.1s .25s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(60px) scaleY(1.15)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translate(-50%,30px)}to{opacity:1;transform:translate(-50%,0)}}
+
+/* ---------- sections ---------- */
+section{position:relative}
+.band{padding-block:clamp(64px,8vw,104px);border-bottom:1px solid var(--line)}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.sec-head h2{font-size:clamp(34px,4.4vw,60px)}
+.sec-head p{color:var(--muted);max-width:40ch;margin:0;font-size:15px}
+.arrows{display:flex;gap:8px}
+.arrows button{width:42px;height:42px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:border-color .2s,background .2s}
+.arrows button:hover{border-color:var(--red);background:var(--red)}
+html[dir=rtl] .arrows svg{transform:scaleX(-1)}
+
+/* work rail */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:min(78vw,420px);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:18px;scrollbar-width:thin;scrollbar-color:var(--red) var(--line);overscroll-behavior-x:contain}
+.card{scroll-snap-align:start;display:grid;gap:14px;text-align:start}
+.card .shot{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1),filter .4s;filter:saturate(.9)}
+.card:hover img{transform:scale(1.05);filter:saturate(1.1)}
+.card .shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(7,8,13,.75));opacity:0;transition:opacity .3s}
+.card:hover .shot::after{opacity:1}
+.card .meta{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:start}
+.card .idx{font-family:var(--display-en);color:var(--red);font-size:30px;line-height:1}
+.card h3{margin:0;font-size:16px;line-height:1.3;font-weight:700}
+.card small{color:var(--muted);font-size:12.5px}
+.card .go{width:30px;height:30px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:.25s}
+.card:hover .go{background:var(--red);border-color:var(--red);transform:rotate(-45deg)}
+html[dir=rtl] .card:hover .go{transform:rotate(45deg) scaleX(-1)}
+html[dir=rtl] .card .go svg{transform:scaleX(-1)}
+
+/* companies marquee */
+.part{padding-block:44px;border-bottom:1px solid var(--line);overflow:hidden}
+.part .wrap{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:center}
+.part .label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);line-height:1.6}
+html[lang=ar] .part .label{letter-spacing:0;font-size:13px}
+.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);direction:ltr}
+.track{display:flex;gap:64px;width:max-content;animation:slide 32s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.co{font-family:var(--display-en);font-size:30px;letter-spacing:.03em;color:#cfd2dd;white-space:nowrap;display:flex;align-items:center;gap:64px;opacity:.85}
+.co::after{content:"✦";color:var(--red);font-size:14px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* impact */
+.impact{background:linear-gradient(180deg,var(--ink),#0b0610 60%,var(--ink))}
+.impact .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,6vw,96px);align-items:start}
+.impact h2{font-size:clamp(46px,6.4vw,96px)}
+.laurel{display:flex;align-items:center;gap:6px;margin:34px 0 10px;direction:ltr}
+.laurel svg{width:46px;height:84px;color:var(--red)}
+.laurel strong{font-family:var(--display-en);font-weight:400;font-size:clamp(84px,9vw,128px);line-height:.85}
+.laurel strong sup{font-size:.4em;color:var(--red);vertical-align:top}
+.impact .under{font-family:var(--display-en);color:var(--red);letter-spacing:.14em;font-size:13px;margin:0 0 14px}
+.impact p.desc{color:var(--muted);max-width:40ch;margin:0}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.list li{display:grid;grid-template-columns:44px 1fr auto;gap:16px;align-items:center;padding:20px 4px;border-bottom:1px solid var(--line);transition:background .25s,padding .25s}
+.list li:hover{background:linear-gradient(90deg,rgba(236,35,64,.08),transparent);padding-inline-start:14px}
+html[dir=rtl] .list li:hover{background:linear-gradient(-90deg,rgba(236,35,64,.08),transparent)}
+.list .i{font-family:var(--display-en);color:var(--muted);font-size:13px}
+.list h4{margin:0;font-size:17px;line-height:1.3}
+.list small{display:block;color:var(--muted);font-size:13px;font-weight:400}
+.list .tag{font-family:var(--display-en);color:var(--red);font-size:clamp(16px,1.6vw,22px);text-align:end;white-space:nowrap}
+
+/* raw to real */
+.raw .wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:clamp(28px,5vw,72px);align-items:center}
+.raw h2{font-size:clamp(46px,6vw,92px)}
+.raw p{color:var(--muted);max-width:36ch}
+.compare{position:relative;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--line);background:var(--panel);--pos:52%;touch-action:pan-y;user-select:none;max-width:100%}
+.compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.compare .after{clip-path:inset(0 0 0 var(--pos))}
+.compare .handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:var(--red);translate:-1px 0}
+.compare .knob{position:absolute;top:50%;left:50%;translate:-50% -50%;width:44px;height:44px;border-radius:50%;background:var(--red);display:grid;place-items:center;box-shadow:0 0 0 6px rgba(236,35,64,.25)}
+.compare .tagl,.compare .tagr{position:absolute;top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:rgba(7,8,13,.75);padding:5px 10px;border:1px solid var(--line)}
+.compare .tagl{left:14px;color:var(--blue)}.compare .tagr{right:14px}
+.compare input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.compare input:focus-visible + .handle .knob{outline:2px solid #fff;outline-offset:3px}
+
+/* about */
+.about .top-row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr);gap:40px;align-items:end;margin-bottom:64px}
+.about h2{font-size:clamp(40px,5.2vw,78px)}
+.about .intro{color:#c4c8d6;margin:0;max-width:44ch}
+.about .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,.75fr);gap:clamp(24px,4vw,56px);align-items:start}
+.blk h3{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 22px;color:var(--text)}
+html[lang=ar] .blk h3{letter-spacing:0;font-size:15px}
+.edu{display:grid;gap:22px}
+.edu div{border-top:1px solid var(--line);padding-top:14px}
+.edu b{display:block;color:var(--red);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.edu p{margin:0;color:#c4c8d6;font-size:14.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chips span{font-size:12.5px;border:1px solid var(--line);padding:6px 11px;border-radius:999px;color:#c4c8d6;direction:ltr}
+.steps{list-style:none;margin:0;padding:0;position:relative}
+.steps::before{content:"";position:absolute;inset-inline-start:48px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--red),var(--line))}
+.steps li{display:grid;grid-template-columns:34px 30px 1fr;gap:0;align-items:start;padding-bottom:26px}
+.steps .n{font-family:var(--display-en);color:var(--red);font-size:20px;line-height:1.2}
+.steps .pin{width:9px;height:9px;border-radius:50%;border:2px solid var(--red);background:var(--ink);margin-top:7px;margin-inline-start:10px;position:relative;z-index:1}
+.steps h4{margin:0 0 4px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+html[lang=ar] .steps h4{letter-spacing:0;font-size:16px}
+.steps p{margin:0;color:var(--muted);font-size:14px}
+.quote{background:linear-gradient(160deg,var(--red),#a70f26);padding:28px 26px 24px;position:relative;overflow:hidden}
+.quote::before{content:"\201C";font-family:Georgia,serif;font-size:90px;line-height:.6;display:block;opacity:.6;margin-bottom:10px}
+.quote p{margin:0 0 22px;font-size:clamp(19px,1.8vw,24px);line-height:1.4;font-weight:500}
+.quote cite{font-family:var(--script-ar);font-style:normal;font-size:26px;opacity:.95}
+html[lang=en] .quote cite{font-family:var(--script-en)}
+
+/* journey */
+.journey .wrap{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr);gap:clamp(32px,6vw,80px)}
+.journey h2{font-size:clamp(38px,5vw,74px);margin-bottom:12px}
+.timeline{position:relative;margin-top:44px;border-inline-start:2px solid var(--red)}
+.job{border-bottom:1px solid var(--line)}
+.job>button{width:100%;display:grid;grid-template-columns:150px 1fr 36px;gap:18px;align-items:center;text-align:start;padding:22px 0 22px 22px}
+html[dir=rtl] .job>button{padding:22px 22px 22px 0}
+.job time{font-size:12.5px;color:var(--muted);direction:ltr;text-align:start;font-variant-numeric:tabular-nums;unicode-bidi:plaintext}
+.job h3{margin:0;font-size:clamp(18px,1.8vw,23px);line-height:1.25}
+.job h3 small{display:block;font-size:13.5px;color:var(--muted);font-weight:400;margin-top:2px}
+.plus{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:transform .3s,background .3s,border-color .3s}
+.job[open] .plus,.job.open .plus{transform:rotate(45deg);background:var(--red);border-color:var(--red)}
+.job .body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)}
+.job.open .body{grid-template-rows:1fr}
+.job .body>div{overflow:hidden}
+.job ul{margin:0;padding:0 22px 24px 190px;color:#c4c8d6;font-size:14.5px;display:grid;gap:8px}
+html[dir=rtl] .job ul{padding:0 190px 24px 22px}
+.job li::marker{color:var(--red)}
+.side .tools{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:4px}
+.side .tools span{aspect-ratio:1;border:1px solid var(--line);display:grid;place-items:center;background:var(--panel)}
+.side .tools img{width:46%}
+.side .blk+.blk{margin-top:44px}
+.sectors{list-style:none;margin:0;padding:0;display:grid}
+.sectors li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.sectors li span{color:var(--muted);font-size:12.5px;direction:ltr}
+
+/* contact */
+.contact .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.contact h2{font-size:clamp(48px,6.2vw,96px)}
+.contact .pitch{color:var(--muted);margin:18px 0 26px;max-width:32ch}
+.ways{list-style:none;margin:0;padding:0;display:grid}
+.ways li{border-bottom:1px solid var(--line)}
+.ways a,.ways div.row{display:grid;grid-template-columns:38px 1fr auto;gap:14px;align-items:center;padding:16px 0}
+.ways .ic{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--red)}
+.ways small{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+html[lang=ar] .ways small{letter-spacing:0;font-size:12.5px}
+.ways b{font-weight:500;font-size:15px;direction:ltr;display:inline-block;unicode-bidi:isolate}
+.ways .arr{color:var(--muted);transition:transform .25s,color .25s}
+.ways a:hover .arr{color:var(--red);transform:translate(4px,-4px)}
+html[dir=rtl] .ways .arr{transform:scaleX(-1)}
+html[dir=rtl] .ways a:hover .arr{transform:scaleX(-1) translate(4px,-4px)}
+.copy{font-size:11px;border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--muted)}
+.copy:hover{color:var(--text);border-color:var(--muted)}
+.poster{position:relative;aspect-ratio:4/5;border:1px solid var(--line);background:radial-gradient(80% 60% at 70% 20%,rgba(236,35,64,.22),transparent 70%),var(--panel);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:26px;max-width:100%}
+.poster canvas{position:absolute;inset:0;width:100%;height:100%}
+.poster .display{position:relative;font-size:clamp(40px,4.4vw,64px)}
+.poster .rec{position:absolute;top:18px;inset-inline-start:20px;font-size:11px;letter-spacing:.16em;color:var(--muted);display:flex;gap:8px;align-items:center;text-transform:uppercase}
+.poster .rec i{width:7px;height:7px;border-radius:50%;background:var(--red);animation:blink 1.2s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+
+footer{padding-block:28px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:12.5px}
+
+
+/* lightbox */
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(1100px,94vw);width:100%;color:var(--text)}
+dialog.lb::backdrop{background:rgba(4,5,9,.9);backdrop-filter:blur(6px)}
+.lb figure{margin:0;background:var(--panel);border:1px solid var(--line)}
+.lb img{width:100%;height:auto;max-height:78vh;object-fit:contain;background:#000}
+.lb figcaption{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 18px}
+.lb figcaption b{font-size:17px}.lb figcaption small{display:block;color:var(--muted)}
+.lb .x{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;font-size:20px;flex:none}
+.lb .x:hover{background:var(--red);border-color:var(--red)}
+
+/* ---------- live build: a crew of agent cursors assembles each section as it scrolls in ---------- */
+html.build:not(.ready) .top .wrap,html.build:not(.ready) main,html.build:not(.ready) footer{visibility:hidden}
+html.build .bw{opacity:0!important;pointer-events:none}
+.bin{animation:bin .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes bin{from{opacity:0}}
+.wipe{animation:wipe .7s cubic-bezier(.7,0,.2,1) both}
+@keyframes wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0)}}
+.toff{visibility:hidden}
+.hl{background:rgba(13,153,255,.42);color:#fff}
+.caret{display:inline-block;width:max(2px,.045em);height:1em;margin-inline-end:calc(-1 * max(2px,.045em));vertical-align:-.12em;animation:blink .9s steps(2) infinite}
+#stage{position:absolute;top:0;left:0;width:0;height:0;z-index:70;pointer-events:none;direction:ltr;font-family:"DM Sans",Arial,sans-serif}
+.ag{position:absolute;left:0;top:0;opacity:0;transition:opacity .5s;will-change:transform}
+#stage.on .ag{opacity:1}#stage.off .ag{opacity:0}
+.ag svg{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55));transform-origin:2px 2px}
+.ag.click svg{animation:clk .28s}
+@keyframes clk{40%{transform:scale(.75)}}
+.ag b{position:absolute;left:13px;top:17px;font-size:10.5px;font-weight:700;line-height:1;color:#fff;background:var(--c);padding:4px 7px 5px;border-radius:2px 8px 8px 8px;white-space:nowrap}
+.ag .chip{position:absolute;left:13px;top:38px;font-size:10.5px;line-height:1;background:#fff;color:#111;padding:5px 7px;border-radius:4px;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.fr{position:absolute;border:1.5px solid var(--fig);transition:opacity .35s}
+.fr.ph{background:rgba(13,153,255,.12)}
+.fr i{position:absolute;width:7px;height:7px;background:#fff;border:1.5px solid var(--fig)}
+.fr i:nth-of-type(1){left:-4px;top:-4px}.fr i:nth-of-type(2){right:-4px;top:-4px}.fr i:nth-of-type(3){left:-4px;bottom:-4px}.fr i:nth-of-type(4){right:-4px;bottom:-4px}
+.fr .tag{position:absolute;left:-1.5px;bottom:100%;margin-bottom:5px;font-size:10.5px;line-height:1;color:var(--fig);white-space:nowrap}
+.fr .dim{position:absolute;left:50%;top:100%;translate:-50% 6px;font-size:10px;line-height:1;background:var(--fig);color:#fff;padding:3px 5px;border-radius:2px;white-space:nowrap}
+.gcol{position:absolute;background:rgba(13,153,255,.035);border-inline:1px solid rgba(13,153,255,.2);opacity:0;transition:opacity .5s}
+.gcol.in{opacity:1}
+.dupe{position:absolute!important;margin:0!important;padding:0!important;border:0!important;display:block!important;list-style:none;opacity:.75;outline:1.5px solid var(--fig);background:var(--ink)}
+.dupe::before{display:none!important}
+.dupe,.dupe *{animation:none!important}
+.crew{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:75;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 32px);padding:7px 7px 7px 14px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-size:12.5px;color:#c4c8d6;white-space:nowrap;transition:opacity .4s,transform .4s}
+html[dir=rtl] .crew{padding:7px 14px 7px 7px}
+.crew .dots{display:flex;padding-inline-start:3px}
+.crew .dots i{width:10px;height:10px;border-radius:50%;margin-inline-start:-3px;border:1.5px solid var(--panel)}
+.crew-t{overflow:hidden;text-overflow:ellipsis}
+.crew-skip{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--text)}
+.crew-skip:hover{border-color:var(--muted)}
+.crew.done .crew-skip{display:none}
+.crew.gone{opacity:0;transform:translate(-50%,12px);pointer-events:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .nav{display:none}
+  .top-tools{margin-inline-start:auto}
+  .about .grid{grid-template-columns:1fr 1fr}
+  .about .quote{grid-column:1/-1;max-width:520px}
+  .contact .wrap{grid-template-columns:1fr 1fr}
+  .contact .poster{grid-column:1/-1;aspect-ratio:16/7}
+}
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;min-height:auto;padding-block:28px 0;gap:0}
+  .giant{top:2%;font-size:24vw}
+  .portrait{position:relative;left:auto;transform:none;width:min(86vw,440px);margin:6vw auto 0;order:2;animation-name:fadeUpM!important}
+  @keyframes fadeUpM{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+  .hero-copy{padding-top:24vw;order:1;max-width:none}
+  .stats{grid-column:auto;order:3;padding:20px 0 28px;grid-template-columns:repeat(3,1fr);justify-items:start;border-top:1px solid var(--line);margin-top:-1px;background:var(--ink);position:relative}
+  .stat{grid-template-columns:1fr;gap:4px}
+  .scroll-hint,.corner{display:none}
+  .impact .wrap,.raw .wrap,.journey .wrap{grid-template-columns:1fr}
+  .about .top-row{grid-template-columns:1fr;margin-bottom:40px}
+  .about .grid{grid-template-columns:1fr}
+  .part .wrap{grid-template-columns:1fr}
+  .contact .wrap{grid-template-columns:1fr}
+  .contact .poster{aspect-ratio:4/3}
+  .job>button{grid-template-columns:1fr 32px;padding-inline-start:18px!important}
+  .job time{grid-column:1}
+  .job h3{grid-column:1;grid-row:2}
+  .plus{grid-row:1/3;grid-column:2}
+  .job ul{padding:0 18px 22px 36px!important}
+  html[dir=rtl] .job ul{padding:0 36px 22px 18px!important}
+}
+@media (max-width:480px){
+  .talk{display:none}
+  .list li{grid-template-columns:30px 1fr;}
+  .list .tag{grid-column:2;text-align:start;font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#home" aria-label="Mabroukui">MABROUK<i></i></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#work"><span class="ar">الأعمال</span><span class="en">Work</span></a>
+      <a href="#impact"><span class="ar">الأثر</span><span class="en">Impact</span></a>
+      <a href="#about"><span class="ar">عني</span><span class="en">About</span></a>
+      <a href="#journey"><span class="ar">الرحلة</span><span class="en">Journey</span></a>
+      <a href="#contact"><span class="ar">تواصل</span><span class="en">Contact</span></a>
+    </nav>
+    <div class="top-tools">
+      <button class="lang" id="lang" type="button"><span class="ar">English</span><span class="en">العربية</span></button>
+      <a class="talk" href="#contact"><span class="ar">لنتحدث</span><span class="en">Let's talk</span> ↗</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="giant" id="giant" aria-hidden="true">PORTFOLIO</div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="hello"><span class="ar">أهلاً، أنا</span><span class="en">Hello, I'm</span></p>
+      <h1 class="display name"><span class="ar">أحمد مبروك<span class="dot">.</span></span><span class="en">Ahmed<br>Mabrouk<span class="dot">.</span></span></h1>
+      <p class="role"><span class="ar">مصمم UI/UX أول<br>ومصمم منتجات رقمية</span><span class="en">Senior UI/UX &amp;<br>Product Designer</span></p>
+      <p class="lede"><span class="ar">أصمم المنتجات الرقمية المعقدة وواسعة النطاق: أنظمة ERP، لوحات تحكم كثيفة البيانات، منصات SaaS ومنتجات الذكاء الاصطناعي، وأحوّلها لتجارب واضحة وسهلة.</span><span class="en">I design complex, large-scale digital products — ERP systems, data-heavy dashboards, SaaS platforms and AI products — and turn them into clear, usable experiences.</span></p>
+      <div class="cta-row">
+        <a class="btn" href="#work"><span class="ar">شاهد أعمالي</span><span class="en">See my work</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+        <a class="btn ghost" href="https://drive.google.com/uc?export=download&amp;id=1cgX7XjNRgQP679iI-yyHkjdh6W9aFECn" target="_blank" rel="noopener"><span class="ar">السيرة الذاتية</span><span class="en">Download CV</span></a>
+      </div>
+      <div class="loc"><span class="live"></span><span class="ar">متاح لمشاريع جديدة · مصر</span><span class="en">Available for new projects · Egypt</span></div>
+    </div>
+    <figure class="portrait" id="portrait"><img src="assets/portrait.webp" width="887" height="900" alt="Ahmed Mabrouk" fetchpriority="high"></figure>
+    <div class="stats">
+      <div class="stat"><strong data-count="5">5+</strong><span class="ar">سنوات خبرة</span><span class="en">Years of experience</span></div>
+      <div class="stat"><strong data-count="60">60+</strong><span class="ar">مشروع مُسلَّم</span><span class="en">Projects shipped</span></div>
+      <div class="stat"><strong data-count="16">16+</strong><span class="ar">قطاع مختلف</span><span class="en">Industries</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="band" id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow"><b>01</b> / <span class="ar">أعمال مختارة</span><span class="en">Selected work</span></p>
+        <h2 class="display"><span class="ar">أعمال <span class="red">تتكلم.</span></span><span class="en">Work that <span class="red">speaks.</span></span></h2>
+      </div>
+      <div class="arrows">
+        <button type="button" id="prev" aria-label="Previous"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button type="button" id="next" aria-label="Next"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+    <div class="rail" id="rail"></div>
+  </div>
+</section>
+
+<!-- BEEN PART OF -->
+<section class="part" aria-label="Companies">
+  <div class="wrap">
+    <p class="label"><span class="ar">كنت جزءًا من<br>الصورة الأكبر</span><span class="en">Been part of<br>the bigger picture</span></p>
+    <div class="marquee"><div class="track">
+      <span class="co">WAKEB DATA</span><span class="co">TOQ</span><span class="co">RGB GROUP</span><span class="co">DR.CODE</span><span class="co">ERP · POS · SAAS</span><span class="co">DESIGN SYSTEMS</span>
+      <span class="co" aria-hidden="true">WAKEB DATA</span><span class="co" aria-hidden="true">TOQ</span><span class="co" aria-hidden="true">RGB GROUP</span><span class="co" aria-hidden="true">DR.CODE</span><span class="co" aria-hidden="true">ERP · POS · SAAS</span><span class="co" aria-hidden="true">DESIGN SYSTEMS</span>
+    </div></div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="band impact" id="impact">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow"><b>02</b> / <span class="ar">النطاق والأثر</span><span class="en">Scope &amp; impact</span></p>
+      <h2 class="display"><span class="ar">الشغل.<br><span class="red">والأثر.</span></span><span class="en">The work.<br><span class="red">The impact.</span></span></h2>
+      <div class="laurel">
+        <svg viewBox="0 0 46 84" fill="currentColor" aria-hidden="true"><path d="M40 82C18 72 6 52 8 26l3 1C10 51 21 69 41 79z"/><ellipse cx="10" cy="20" rx="4" ry="9" transform="rotate(-12 10 20)"/><ellipse cx="5" cy="36" rx="4" ry="9" transform="rotate(-40 5 36)"/><ellipse cx="8" cy="52" rx="4" ry="9" transform="rotate(-62 8 52)"/><ellipse cx="17" cy="66" rx="4" ry="9" transform="rotate(-78 17 66)"/></svg>
+        <strong data-count="60">60<sup>+</sup></strong>
+        <svg viewBox="0 0 46 84" fill="currentColor" aria-hidden="true" style="transform:scaleX(-1)"><path d="M40 82C18 72 6 52 8 26l3 1C10 51 21 69 41 79z"/><ellipse cx="10" cy="20" rx="4" ry="9" transform="rotate(-12 10 20)"/><ellipse cx="5" cy="36" rx="4" ry="9" transform="rotate(-40 5 36)"/><ellipse cx="8" cy="52" rx="4" ry="9" transform="rotate(-62 8 52)"/><ellipse cx="17" cy="66" rx="4" ry="9" transform="rotate(-78 17 66)"/></svg>
+      </div>
+      <p class="under">PROJECTS SHIPPED</p>
+      <p class="desc"><span class="ar">مشاريع في أكثر من 16 قطاع، من التقنية المالية والتجارة الإلكترونية إلى التعليم والرعاية الصحية والخدمات.</span><span class="en">Products across 16+ industries, from fintech and e-commerce to education, healthcare and services.</span></p>
+    </div>
+    <ul class="list">
+      <li><span class="i">01</span><h4><span class="ar">أنظمة ERP</span><span class="en">ERP Systems</span><small><span class="ar">وحدات متكاملة ومسارات عمل معقدة</span><span class="en">Connected modules and complex workflows</span></small></h4><span class="tag">RGB GROUP</span></li>
+      <li><span class="i">02</span><h4><span class="ar">Design Systems</span><span class="en">Design Systems</span><small><span class="ar">مكونات موحّدة قابلة للتوسع وموثّقة</span><span class="en">Scalable, documented component libraries</span></small></h4><span class="tag">WAKEB DATA</span></li>
+      <li><span class="i">03</span><h4><span class="ar">لوحات تحكم كثيفة البيانات</span><span class="en">Data-heavy Dashboards</span><small><span class="ar">تنظيم المعلومات لدعم القرار</span><span class="en">Information structured for decisions</span></small></h4><span class="tag">ENTERPRISE</span></li>
+      <li><span class="i">04</span><h4><span class="ar">أنظمة نقاط البيع POS</span><span class="en">POS Solutions</span><small><span class="ar">سرعة ودقة في لحظة البيع</span><span class="en">Speed and accuracy at the counter</span></small></h4><span class="tag">RETAIL</span></li>
+      <li><span class="i">05</span><h4><span class="ar">تطبيقات الموبايل</span><span class="en">Mobile Apps</span><small><span class="ar">رعاية صحية، تجارة إلكترونية، خدمات</span><span class="en">Healthcare, e-commerce and services</span></small></h4><span class="tag">TOQ</span></li>
+      <li><span class="i">06</span><h4><span class="ar">منتجات الذكاء الاصطناعي</span><span class="en">AI-Powered Products</span><small><span class="ar">تقنية معقدة بتجربة بسيطة ومفهومة</span><span class="en">Complex tech, simple experiences</span></small></h4><span class="tag">AI</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- RAW TO REAL -->
+<section class="band raw" id="process">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow"><b>03</b> / <span class="ar">تحت السطح</span><span class="en">A look under the surface</span></p>
+      <h2 class="display"><span class="ar">من الهيكل.<br><span class="red">للواقع.</span></span><span class="en">From wire.<br><span class="red">To real.</span></span></h2>
+      <p><span class="ar">نظام موارد بشرية كامل، من خطوط الهيكل الأولى إلى الواجهة النهائية. اسحب المؤشر وشاهد الفرق.</span><span class="en">A full HR system, from the first structural lines to the shipped interface. Drag the handle to compare.</span></p>
+    </div>
+    <div class="compare" id="compare">
+      <img src="assets/wireframe.webp" alt="HR system — structure" width="1200" height="900">
+      <img class="after" src="assets/projects/mabroukui-3.webp" alt="HR system — final UI" width="1200" height="900">
+      <span class="tagl">Wireframe</span><span class="tagr">Final UI</span>
+      <input type="range" min="0" max="100" value="52" id="cmp" aria-label="Compare wireframe and final design">
+      <span class="handle"><span class="knob"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="band about" id="about">
+  <div class="wrap">
+    <div class="top-row">
+      <div>
+        <p class="eyebrow"><b>04</b> / <span class="ar">خلف الشاشات</span><span class="en">Behind the screens</span></p>
+        <h2 class="display"><span class="ar">ليست مجرد واجهات.<br>بل تجربة <span class="red">واضحة.</span></span><span class="en">Not just screens.<br>It's <span class="red">clarity.</span></span></h2>
+      </div>
+      <p class="intro"><span class="ar">أنا أحمد مبروك، مصمم UX/UI ومصمم منتجات من مصر. أركز على تحويل العمليات والمعلومات المعقدة إلى تجارب منظمة، تربط احتياجات المستخدم بأهداف المنتج وقابلية التنفيذ.</span><span class="en">I'm Ahmed Mabrouk, a UX/UI and product designer from Egypt. I turn complex processes and information into organized experiences that balance user needs, business goals and technical feasibility.</span></p>
+    </div>
+    <div class="grid">
+      <div class="blk">
+        <h3><span class="ar">المهارات والتخصص</span><span class="en">Skills &amp; focus</span></h3>
+        <div class="edu">
+          <div><b><span class="ar">التخصص</span><span class="en">Focus</span></b><p><span class="ar">Enterprise SaaS، أنظمة ERP، لوحات تحكم معقدة ومنتجات AI.</span><span class="en">Enterprise SaaS, ERP systems, complex dashboards and AI products.</span></p></div>
+          <div><b><span class="ar">نقطة القوة</span><span class="en">Strength</span></b><p><span class="ar">تبسيط الـ workflows وتنظيم المنتجات كثيفة البيانات.</span><span class="en">Simplifying workflows and organizing data-heavy products.</span></p></div>
+          <div><b><span class="ar">الأدوات</span><span class="en">Toolkit</span></b>
+            <div class="chips"><span>UI Prototyping</span><span>Wireframing</span><span>Design System</span><span>Auto Layout</span><span>Variables</span><span>Vibe Coding</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="blk">
+        <h3><span class="ar">من المشكلة إلى التسليم</span><span class="en">From problem to handoff</span></h3>
+        <ol class="steps">
+          <li><span class="n">01</span><span class="pin"></span><div><h4><span class="ar">الفهم</span><span class="en">Understand</span></h4><p><span class="ar">البحث مع المستخدمين وفهم المشكلة وأهداف المنتج.</span><span class="en">Research with users; frame the problem and product goals.</span></p></div></li>
+          <li><span class="n">02</span><span class="pin"></span><div><h4><span class="ar">الهيكلة</span><span class="en">Structure</span></h4><p><span class="ar">Task flows وwireframes ومعمارية المعلومات.</span><span class="en">Task flows, wireframes and information architecture.</span></p></div></li>
+          <li><span class="n">03</span><span class="pin"></span><div><h4><span class="ar">التصميم</span><span class="en">Design</span></h4><p><span class="ar">واجهات عالية الدقة مبنية على Design System موحّد.</span><span class="en">High-fidelity UI built on a single design system.</span></p></div></li>
+          <li><span class="n">04</span><span class="pin"></span><div><h4><span class="ar">التسليم</span><span class="en">Handoff</span></h4><p><span class="ar">تعاون مع المطورين لتنفيذ pixel-perfect ومراجعات UX.</span><span class="en">Pixel-perfect delivery with developers, plus UX reviews.</span></p></div></li>
+        </ol>
+      </div>
+      <figure class="quote">
+        <p><span class="ar">التصميم الجيد لا يجعل المنتج أجمل فقط، بل يجعله أوضح، أسهل، وأكثر قابلية للنمو.</span><span class="en">Good design doesn't just make a product prettier. It makes it clearer, easier, and ready to grow.</span></p>
+        <cite><span class="ar">أحمد مبروك</span><span class="en">Ahmed Mabrouk</span></cite>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="band journey" id="journey">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow"><b>05</b> / <span class="ar">الرحلة</span><span class="en">The journey</span></p>
+      <h2 class="display"><span class="ar">خطوات صغيرة.<br><span class="red">أثر كبير.</span></span><span class="en">Little steps.<br><span class="red">Big products.</span></span></h2>
+      <div class="timeline" id="timeline">
+        <div class="job open">
+          <button type="button" aria-expanded="true"><time>09/2024 — <span class="ar">الآن</span><span class="en">Now</span></time><h3>UX/UI Designer<small>Wakeb Data · <span class="ar">السعودية</span><span class="en">Saudi Arabia</span></small></h3><span class="plus"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="body"><div><ul>
+            <li><span class="ar">بناء Design System قابل للتوسع وصيانته للمنتجات الداخلية.</span><span class="en">Built and maintained a scalable design system for internal products.</span></li>
+            <li><span class="ar">توحيد أنماط التصميم وUI components لضمان اتساق المنتج.</span><span class="en">Defined design patterns and standardized UI components for consistency.</span></li>
+            <li><span class="ar">مراجعات للواجهات وتقييمات accessibility للمنصات الحالية.</span><span class="en">Ran UI reviews and accessibility audits on existing platforms.</span></li>
+          </ul></div></div>
+        </div>
+        <div class="job">
+          <button type="button" aria-expanded="false"><time>02/2024 — 11/2024</time><h3>UX/UI Designer<small>TOQ · <span class="ar">السعودية</span><span class="en">Saudi Arabia</span></small></h3><span class="plus"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="body"><div><ul>
+            <li><span class="ar">تصميم UI/UX لعدة مشاريع متزامنة في الرعاية الصحية والتجارة الإلكترونية والخدمات.</span><span class="en">Delivered UI/UX for concurrent projects in healthcare, e-commerce and services.</span></li>
+            <li><span class="ar">User research وwireframing وprototyping وusability testing.</span><span class="en">User research, wireframing, prototyping and usability testing.</span></li>
+            <li><span class="ar">العمل ضمن فرق agile في daily scrums وsprint reviews.</span><span class="en">Worked in agile teams through daily scrums and sprint reviews.</span></li>
+          </ul></div></div>
+        </div>
+        <div class="job">
+          <button type="button" aria-expanded="false"><time>05/2023 — 02/2024</time><h3>Product Designer<small>RGB Group · <span class="ar">مصر</span><span class="en">Egypt</span></small></h3><span class="plus"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="body"><div><ul>
+            <li><span class="ar">تصميم نظام ERP واسع النطاق وحل POS.</span><span class="en">Designed a large-scale ERP system and a POS solution.</span></li>
+            <li><span class="ar">إنشاء وتوثيق Design System متكامل عبر الوحدات.</span><span class="en">Created and documented a complete design system across modules.</span></li>
+            <li><span class="ar">معالجة شكاوى المستخدمين عبر UX audits ودورات الملاحظات.</span><span class="en">Resolved user pain points through UX audits and feedback loops.</span></li>
+          </ul></div></div>
+        </div>
+        <div class="job">
+          <button type="button" aria-expanded="false"><time>11/2022 — 05/2023</time><h3>UX/UI Designer<small>Dr.Code · <span class="ar">مصر</span><span class="en">Egypt</span></small></h3><span class="plus"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="body"><div><ul>
+            <li><span class="ar">Wireframes وprototypes وتصميم واجهات للمشاريع الداخلية ومنصات العملاء.</span><span class="en">Wireframes, prototypes and UI for internal projects and client platforms.</span></li>
+          </ul></div></div>
+        </div>
+      </div>
+    </div>
+    <aside class="side">
+      <div class="blk">
+        <h3><span class="ar">البرامج</span><span class="en">Software</span></h3>
+        <div class="tools">
+          <span title="Figma"><img src="assets/icons/figma.svg" alt="Figma"></span>
+          <span title="Photoshop"><img src="assets/icons/photoshop.svg" alt="Photoshop"></span>
+          <span title="Illustrator"><img src="assets/icons/illustrator.svg" alt="Illustrator"></span>
+          <span title="Notion"><img src="assets/icons/notion.svg" alt="Notion"></span>
+          <span title="Miro"><img src="assets/icons/miro.svg" alt="Miro"></span>
+        </div>
+      </div>
+      <div class="blk">
+        <h3><span class="ar">مجالات عملت فيها</span><span class="en">Industries</span></h3>
+        <ul class="sectors">
+          <li><span class="ar">التقنية المالية</span><span class="en">Fintech</span><span class="ar">Fintech</span></li>
+          <li><span class="ar">التجارة الإلكترونية</span><span class="en">E-commerce</span><span class="ar">E-commerce</span></li>
+          <li><span class="ar">الرعاية الصحية</span><span class="en">Healthcare</span><span class="ar">Health</span></li>
+          <li><span class="ar">التعليم</span><span class="en">Education</span><span class="ar">EdTech</span></li>
+          <li><span class="ar">الخدمات والمؤسسات</span><span class="en">Services &amp; enterprise</span><span class="ar">B2B</span></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="band contact" id="contact">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow"><b>06</b> / <span class="ar">مشروعك القادم</span><span class="en">Your next product</span></p>
+      <h2 class="display"><span class="ar">لنعمل<br>معًا<span class="red">.</span></span><span class="en">Let's work<br>together<span class="red">.</span></span></h2>
+      <p class="pitch"><span class="ar">لديك منتج معقد يحتاج أن يكون أوضح؟ أخبرني عنه ولنبدأ.</span><span class="en">Got a complex product that needs to feel clear? Tell me about it.</span></p>
+      <a class="btn" href="https://wa.me/201113949916" target="_blank" rel="noopener"><span class="ar">ابدأ المحادثة</span><span class="en">Start a conversation</span> ↗</a>
+    </div>
+    <ul class="ways">
+      <li><div class="row"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><span><small><span class="ar">البريد</span><span class="en">Email</span></small><b>ahmed@mabroukui.com</b></span><button class="copy" type="button" data-copy="ahmed@mabroukui.com"><span class="ar">نسخ</span><span class="en">Copy</span></button></div></li>
+      <li><a href="https://wa.me/201113949916" target="_blank" rel="noopener"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/></svg></span><span><small>WhatsApp</small><b>+20 111 394 9916</b></span><span class="arr">↗</span></a></li>
+      <li><a href="https://www.linkedin.com/in/a7medmabrok0/" target="_blank" rel="noopener"><span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></span><span><small>LinkedIn</small><b>/in/a7medmabrok0</b></span><span class="arr">↗</span></a></li>
+      <li><a href="https://www.behance.net/a7medmabrok0" target="_blank" rel="noopener"><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M8.2 11.4c.9-.4 1.5-1.2 1.5-2.4C9.7 6.6 8 6 6 6H1v12h5.2c2 0 4.1-1 4.1-3.4 0-1.5-.7-2.7-2.1-3.2zM3.3 8h2.2c.9 0 1.7.2 1.7 1.2s-.6 1.3-1.5 1.3H3.3zm2.4 8H3.3v-3.4h2.5c1 0 1.8.4 1.8 1.6 0 1.3-.9 1.8-1.9 1.8zM15 7h5v1.3h-5zm7.4 7c0-2.8-1.6-5-4.6-5s-4.8 2.2-4.8 5 1.7 5 4.8 5c2.3 0 3.8-1 4.5-3.2h-2.3c-.2.8-1.2 1.2-2.1 1.2-1.4 0-2.2-.8-2.3-2.2h6.8zm-6.8-1.3c.1-1.1.8-1.9 2.1-1.9s1.9.8 2 1.9z"/></svg></span><span><small>Behance</small><b>/a7medmabrok0</b></span><span class="arr">↗</span></a></li>
+      <li><a href="https://dribbble.com/a7medmabrok0" target="_blank" rel="noopener"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8.5 3.7c3 4 5.5 9 6.8 16.6M3.1 10.6c5.8.2 11-1.2 15-4.6M5.6 18.4c3-4.4 8-6 15.3-4.2"/></svg></span><span><small>Dribbble</small><b>/a7medmabrok0</b></span><span class="arr">↗</span></a></li>
+    </ul>
+    <div class="poster" id="poster">
+      <canvas id="planes" aria-hidden="true"></canvas>
+      <span class="rec"><i></i> mabroukui.com</span>
+      <p class="display"><span class="ar">اجعلها<br><span class="red">أوضح.</span></span><span class="en">Make it<br><span class="red">feel clear.</span></span></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Ahmed Mabrouk · mabroukui.com</span>
+    <span><span class="ar">صُمّم في مصر بعناية</span><span class="en">Designed with care in Egypt</span></span>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb">
+  <figure>
+    <img id="lbImg" alt="" width="1200" height="900">
+    <figcaption><span><b id="lbTitle"></b><small id="lbSub"></small></span><button class="x" type="button" id="lbClose" aria-label="Close">×</button></figcaption>
+  </figure>
+</dialog>
+
+<script>
+(() => {
+  const projects = [
+    ['mabroukui-3.webp','نظام الموارد البشرية','لوحة تحكم للموظفين','HR Management System','Employee dashboard','2023'],
+    ['mabroukui-5.webp','لوحة إدارة المتجر','تصميم منتج رقمي','Store Dashboard','Digital product design','2023'],
+    ['mabroukui-8.webp','إدارة المشاريع','تجربة متابعة المشاريع','Project Management','Project tracking experience','2023'],
+    ['mabroukui-6.webp','تطبيق السيارات','تجربة تطبيق للبحث عن السيارات','Car Marketplace App','Mobile car shopping','2023'],
+    ['mabroukui-7.webp','تطبيق تحويل الأموال','تجربة مالية للهواتف','Money Transfer App','Mobile finance experience','2023'],
+    ['mabroukui-9.webp','الاتحاد السعودي للاكروس','تجربة رياضية','Saudi Lacrosse Federation','Sports app experience','2023'],
+    ['mabroukui-10.webp','تطبيق الملف الشخصي','تجربة تواصل ومشاركة','Profile App','Social sharing experience','2023'],
+    ['mabroukui-11.webp','تطبيق The 6 Talk','تصميم تجربة للهواتف','The 6 Talk','Mobile app experience','2023'],
+    ['mabroukui.webp','منصتي التعليمية','موقع وتطبيق تعليمي','My Learning Platform','Educational website & app','2023'],
+    ['mabroukui-2.webp','ميدان التخزين','موقع وتطبيق خدمات','Midan Storage','Service website & app','2023'],
+    ['mabroukui-1.webp','جمعية طريق السلام','موقع جمعية','Path of Peace Association','Nonprofit website','2023'],
+    ['mabroukui-4.webp','شركة البناء الحديثة','موقع شركة','Modern Construction Co.','Corporate website','2023']
+  ];
+  const root = document.documentElement;
+  const isEn = () => root.lang === 'en';
+
+  /* language */
+  const setLang = l => {
+    root.lang = l; root.dir = l === 'en' ? 'ltr' : 'rtl';
+    try { localStorage.setItem('mabroukui-v2-lang', l); } catch (_) {}
+  };
+  try { const s = localStorage.getItem('mabroukui-v2-lang'); if (s) setLang(s); } catch (_) {}
+  document.getElementById('lang').addEventListener('click', () => setLang(isEn() ? 'ar' : 'en'));
+
+  /* work rail */
+  const rail = document.getElementById('rail');
+  const arrow = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  projects.forEach(([f, ta, da, te, de], i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'card';
+    b.innerHTML = `<div class="shot"><img src="assets/projects/${f}" alt="" loading="${i < 3 ? 'eager' : 'lazy'}" width="1200" height="900"></div>
+      <div class="meta"><span class="idx">${String(i + 1).padStart(2, '0')}</span>
+      <span><h3><span class="ar">${ta}</span><span class="en">${te}</span></h3><small><span class="ar">${da}</span><span class="en">${de}</span></small></span>
+      <span class="go">${arrow}</span></div>`;
+    b.addEventListener('click', () => openLb(i));
+    rail.appendChild(b);
+  });
+  const step = dir => {
+    const w = rail.querySelector('.card').offsetWidth + 20;
+    const rtl = getComputedStyle(rail).direction === 'rtl';
+    rail.scrollBy({ left: dir * w * (rtl ? -1 : 1), behavior: 'smooth' });
+  };
+  document.getElementById('next').onclick = () => step(1);
+  document.getElementById('prev').onclick = () => step(-1);
+
+  /* lightbox */
+  const lb = document.getElementById('lb');
+  function openLb(i) {
+    const p = projects[i];
+    document.getElementById('lbImg').src = 'assets/projects/' + p[0];
+    document.getElementById('lbImg').alt = isEn() ? p[3] : p[1];
+    document.getElementById('lbTitle').textContent = isEn() ? p[3] : p[1];
+    document.getElementById('lbSub').textContent = isEn() ? p[4] : p[2];
+    lb.showModal();
+  }
+  document.getElementById('lbClose').onclick = () => lb.close();
+  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+
+  /* timeline accordion */
+  document.querySelectorAll('.job > button').forEach(btn => btn.addEventListener('click', () => {
+    const job = btn.parentElement, open = !job.classList.contains('open');
+    job.classList.toggle('open', open); btn.setAttribute('aria-expanded', open);
+  }));
+
+  /* compare slider */
+  const cmp = document.getElementById('compare'), range = document.getElementById('cmp');
+  range.addEventListener('input', () => cmp.style.setProperty('--pos', range.value + '%'));
+
+  /* copy */
+  document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => {
+    const t = b.dataset.copy, label = b.innerHTML;
+    const done = () => { b.textContent = isEn() ? 'Copied' : 'تم النسخ'; setTimeout(() => b.innerHTML = label, 1600); };
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, () => sel(b)); else sel(b);
+  }));
+  function sel(b) { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling.querySelector('b')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* count up */
+  const building = root.classList.contains('build');
+  const countUp = el => {
+    const end = +el.dataset.count, sup = el.querySelector('sup'), t0 = performance.now();
+    const tick = t => { const k = Math.min(1, (t - t0) / 1100), v = Math.round(end * (1 - Math.pow(1 - k, 3)));
+      el.firstChild.nodeValue = v + (sup ? '' : '+'); if (k < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  };
+  if (!reduce && !building && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return; io.unobserve(e.target); countUp(e.target);
+    }), { threshold: .6 });
+    document.querySelectorAll('[data-count]').forEach(el => io.observe(el));
+  }
+
+  /* hero parallax */
+  const giant = document.getElementById('giant');
+  if (!reduce) addEventListener('scroll', () => {
+    const y = scrollY; if (y > 1000) return;
+    giant.style.transform = `translateY(${y * .35}px)`;
+  }, { passive: true });
+
+  /* paper-plane triangle, drawn on the contact poster */
+  const colors = ['#ec2340', '#ff3a55', '#eef0f6', '#96b4e6', '#5ee0c4'];
+  const dpr = Math.min(2, devicePixelRatio || 1);
+  function tri(ctx, p) {
+    ctx.save(); ctx.translate(p.x * dpr, p.y * dpr); ctx.rotate(p.r); ctx.globalAlpha = p.life;
+    ctx.fillStyle = p.c; ctx.beginPath(); const s = p.s * dpr;
+    ctx.moveTo(s, 0); ctx.lineTo(-s * .8, s * .6); ctx.lineTo(-s * .4, 0); ctx.lineTo(-s * .8, -s * .6); ctx.closePath(); ctx.fill(); ctx.restore();
+  }
+
+  /* contact poster: drifting paper planes that flee the pointer */
+  const pc = document.getElementById('planes'), px = pc.getContext('2d'), poster = document.getElementById('poster');
+  let planes = [], mouse = { x: -999, y: -999 }, pw = 0, ph = 0, visible = false;
+  const psize = () => { const r = poster.getBoundingClientRect(); pw = r.width; ph = r.height; pc.width = pw * dpr; pc.height = ph * dpr; };
+  psize(); addEventListener('resize', psize);
+  for (let i = 0; i < 42; i++) planes.push({ x: Math.random() * pw, y: Math.random() * ph * .7, a: Math.random() * 6.28,
+    sp: .3 + Math.random() * .6, s: 4 + Math.random() * 6, c: colors[i % colors.length] });
+  poster.addEventListener('pointermove', e => { const r = poster.getBoundingClientRect(); mouse = { x: e.clientX - r.left, y: e.clientY - r.top }; });
+  poster.addEventListener('pointerleave', () => mouse = { x: -999, y: -999 });
+  function fly() {
+    px.clearRect(0, 0, pc.width, pc.height);
+    planes.forEach(p => {
+      const dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.hypot(dx, dy);
+      if (d < 110) { const t = Math.atan2(dy, dx); p.a += (t - p.a) * .12; }
+      else p.a += (Math.random() - .5) * .06;
+      const v = d < 110 ? p.sp * 4 : p.sp;
+      p.x += Math.cos(p.a) * v; p.y += Math.sin(p.a) * v;
+      if (p.x < -20) p.x = pw + 20; if (p.x > pw + 20) p.x = -20; if (p.y < -20) p.y = ph + 20; if (p.y > ph + 20) p.y = -20;
+      tri(px, { x: p.x, y: p.y, r: p.a, s: p.s, c: p.c, life: .9 });
+    });
+    if (visible) requestAnimationFrame(fly);
+  }
+  if (reduce) { visible = false; planes.forEach(p => tri(px, { x: p.x, y: p.y, r: p.a, s: p.s, c: p.c, life: .9 })); }
+  else if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { const was = visible; visible = e.isIntersecting; if (visible && !was) requestAnimationFrame(fly); }).observe(poster);
+  else { visible = true; fly(); }
+
+  /* live build: the page starts as an empty canvas and a crew of agent cursors builds every section
+     the first time it scrolls into view — drawing frames, dropping images, typing copy, and
+     alt-dragging copies of a card then retyping its number and title, like a shared design file. */
+  if (building) try { liveBuild(); } catch (e) { console.error(e); root.classList.remove('build'); root.classList.add('ready'); }
+
+  function liveBuild() {
+    const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    const small = innerWidth < 700;
+    const crew = [['Layout', '#ec2340'], ['Copy', '#0d99ff'], ['Image', '#2fd3a7'], ['Type', '#ffb020']]
+      .slice(0, small ? 3 : 4);
+    const stage = document.createElement('div'); stage.id = 'stage'; document.body.appendChild(stage);
+    const doc = el => { const r = el.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; };
+    const vis = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+    const ease = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    const fade = n => { n.style.opacity = 0; setTimeout(() => n.remove(), 400); };
+    const texts = el => {
+      const out = [], w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      for (let n; (n = w.nextNode());) if (n.nodeValue.trim() && n.parentElement.getClientRects().length) out.push(n);
+      return out;
+    };
+
+    /* one shared rAF loop drives every tween; a rushed context finishes its tweens on the spot */
+    const tweens = new Set(); let looping = false;
+    const loop = t => { tweens.forEach(f => f(t)); if (tweens.size) requestAnimationFrame(loop); else looping = false; };
+    const tween = (ms, fn, c) => new Promise(res => {
+      if (c.rush) { fn(1); return res(); }
+      const t0 = performance.now();
+      const f = t => { const k = c.rush ? 1 : Math.min(1, (t - t0) / ms); fn(k); if (k >= 1) { tweens.delete(f); res(); } };
+      tweens.add(f); if (!looping) { looping = true; requestAnimationFrame(loop); }
+    });
+
+    const agents = crew.map(([name, color], i) => {
+      const el = document.createElement('div'); el.className = 'ag'; el.style.setProperty('--c', color);
+      el.innerHTML = `<svg width="18" height="20" viewBox="0 0 18 20"><path d="M1.5 1.5l14.5 7-6.4 1.9L6.3 17z" fill="${color}" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg><b>${name}</b>`;
+      stage.appendChild(el);
+      const a = { el, color, x: 0, y: 0, q: Promise.resolve(),
+        set(x, y) { a.x = x; a.y = y; el.style.transform = `translate(${x}px,${y}px)`; },
+        to(x, y, c, ms) {
+          const x0 = a.x, y0 = a.y, d = Math.hypot(x - x0, y - y0) || 1, bend = (i % 2 ? 1 : -1) * Math.min(60, d * .15);
+          return tween(ms || Math.min(900, 220 + d * .45), k => {
+            const e = ease(k), b = Math.sin(Math.PI * e) * bend;
+            a.set(x0 + (x - x0) * e - (y - y0) / d * b, y0 + (y - y0) * e + (x - x0) / d * b);
+          }, c);
+        },
+        click() { el.classList.remove('click'); void el.offsetWidth; el.classList.add('click'); }
+      };
+      return a;
+    });
+    const A = i => agents[i % agents.length];
+
+    /* status pill */
+    const pill = document.createElement('div'); pill.className = 'crew'; pill.setAttribute('role', 'status');
+    pill.innerHTML = `<span class="dots">${crew.map(([, c]) => `<i style="background:${c}"></i>`).join('')}</span><span class="crew-t"></span><button type="button" class="crew-skip"><span class="ar">تخطي</span><span class="en">Skip</span></button>`;
+    document.body.appendChild(pill);
+    const say = (ar, en) => { $('.crew-t', pill).innerHTML = `<span class="ar">${ar}</span><span class="en">${en}</span>`; };
+
+    /* a build context per section: its hidden targets, its overlays, and a rush switch */
+    const ctxs = [];
+    function ctx(sec, label) {
+      const c = { sec, label, state: 'idle', rush: false, targets: new Set(), fx: new Set(), undo: new Set(), after: null };
+      c.hide = (...els) => els.flat(Infinity).forEach(el => { if (el) { el.classList.add('bw'); c.targets.add(el); } });
+      c.show = (el, anim) => {
+        if (!el) return; el.classList.remove('bw');
+        if (anim && !c.rush) { el.classList.add(anim); setTimeout(() => el.classList.remove(anim), 800); }
+      };
+      c.wait = ms => c.rush ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+      c.later = (n, ms) => setTimeout(() => { c.fx.delete(n); fade(n); }, c.rush ? 0 : ms);
+      c.with = (a, fn) => { const run = a.q.then(async () => { try { await fn(a); } catch (_) {} }); a.q = run; return run; };
+      c.box = (r, tag, cls) => {
+        const f = document.createElement('div'); f.className = 'fr ' + (cls || '');
+        f.style.cssText = `left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px`;
+        f.innerHTML = (tag ? `<span class="tag">${tag}</span>` : '') + '<i></i><i></i><i></i><i></i>';
+        stage.appendChild(f); c.fx.add(f); return f;
+      };
+      /* sweep across the section laying down the column grid, starting from the reading side */
+      c.guides = async a => {
+        if (c.rush) return;
+        const w = $('.wrap', sec), r = doc(w), cs = getComputedStyle(w), s = doc(sec);
+        const l = r.x + parseFloat(cs.paddingLeft), right = r.x + r.w - parseFloat(cs.paddingRight);
+        const n = small ? 4 : 12, gap = small ? 16 : 24, cw = (right - l - gap * (n - 1)) / n;
+        const cols = [];
+        for (let i = 0; i < n; i++) {
+          const g = document.createElement('div'); g.className = 'gcol';
+          g.style.cssText = `left:${l + i * (cw + gap)}px;top:${s.y}px;width:${cw}px;height:${s.h}px`;
+          stage.appendChild(g); c.fx.add(g); cols.push(g);
+        }
+        const rtl = root.dir === 'rtl', x0 = rtl ? right : l, x1 = rtl ? l : right;
+        const y = Math.max(s.y, scrollY + 70) + 10;
+        await a.to(x0, y, c); a.click();
+        await tween(small ? 450 : 750, k => {
+          const x = x0 + (x1 - x0) * ease(k); a.set(x, y);
+          cols.forEach(g => { const gl = parseFloat(g.style.left); if (rtl ? gl + cw >= x : gl <= x) g.classList.add('in'); });
+        }, c);
+        cols.forEach(g => g.classList.add('in'));
+      };
+      /* drag out a placeholder frame over el */
+      c.frame = async (a, el, tag, hold = 900) => {
+        if (c.rush || !el || !vis(el)) return;
+        const r = doc(el); await a.to(r.x, r.y, c); a.click();
+        const f = c.box({ x: r.x, y: r.y, w: 0, h: 0 }, tag, 'ph');
+        await tween(Math.min(700, 260 + (r.w + r.h) * .25), k => {
+          const e = ease(k); f.style.width = r.w * e + 'px'; f.style.height = r.h * e + 'px'; a.set(r.x + r.w * e, r.y + r.h * e);
+        }, c);
+        f.insertAdjacentHTML('beforeend', `<span class="dim">${Math.round(r.w)} × ${Math.round(r.h)}</span>`);
+        c.later(f, hold);
+      };
+      /* carry a file onto el and drop it in */
+      c.image = async (a, el, file, swap) => {
+        if (c.rush || !vis(el)) return c.show(el);
+        const r = doc(el), chip = document.createElement('span'); chip.className = 'chip'; chip.textContent = file;
+        a.el.appendChild(chip);
+        await a.to(r.x + r.w * .5, r.y + r.h * .45, c); a.click(); chip.remove();
+        if (swap) swap();
+        c.show(el, 'wipe'); await c.wait(300);
+      };
+      /* a pasted copy keeps the previous component's images until the agent drops the real file in */
+      c.borrow = (dst, src) => {
+        const di = $$('img', dst), si = $$('img', src), real = di.map(im => im.getAttribute('src'));
+        di.forEach((im, k) => { if (si[k]) im.src = si[k].getAttribute('src'); });
+        const back = () => { di.forEach((im, k) => im.setAttribute('src', real[k])); c.undo.delete(back); };
+        c.undo.add(back); return back;
+      };
+      /* one component at a time: build the first, then each next one is a copy of the previous, edited */
+      c.series = async (a, items, make, edit) => {
+        items = items.filter(Boolean); if (!items.length) return;
+        await make(items[0]);
+        for (let i = 1; i < items.length; i++) { await c.dup(a, items[i - 1], items[i]); await edit(items[i], items[i - 1]); }
+      };
+      c.retype = (a, o = {}) => (d, s) => c.type(a, d, { from: s, ms: 22, ...o });
+      /* type el's visible text with a caret the cursor rides on; with `from`, first show src's text selected */
+      c.type = async (a, el, o = {}) => {
+        if (!el) return;
+        if (c.rush || !vis(el)) return c.show(el);
+        const nodes = texts(el); if (!nodes.length) return c.show(el, 'bin');
+        const from = o.from ? texts(o.from) : null;
+        const caret = document.createElement('i'); caret.className = 'caret'; caret.style.background = a.color; caret.style.visibility = 'hidden';
+        const ws = nodes.map(n => {
+          const w = document.createElement('span'), on = document.createElement('span'), off = document.createElement('span');
+          off.className = 'toff'; w.append(on, off); n.replaceWith(w); return { n, w, on, off, s: n.nodeValue };
+        });
+        const restore = () => { ws.forEach(o => o.w.isConnected && o.w.replaceWith(o.n)); caret.remove(); c.undo.delete(restore); };
+        c.undo.add(restore);
+        const put = k => {
+          let left = k;
+          for (const o of ws) {
+            const t = Math.max(0, Math.min(o.s.length, left)); left -= o.s.length;
+            if (o.on.className || o.on.textContent.length !== t) { o.on.className = ''; o.on.textContent = o.s.slice(0, t); o.off.textContent = o.s.slice(t); }
+          }
+          const cur = ws.find(o => o.on.textContent.length < o.s.length) || ws[ws.length - 1];
+          if (caret.previousSibling !== cur.on) cur.on.after(caret);
+        };
+        const tip = () => { const r = caret.getBoundingClientRect(); return [r.right + scrollX + 1, r.bottom + scrollY - 3]; };
+        if (from) {
+          /* the pasted copy still says what the previous one said; select it, then type over it */
+          ws.forEach((o, i) => { o.on.className = 'pasted'; o.on.textContent = from[i] ? from[i].nodeValue : ''; o.off.textContent = ''; });
+          c.show(el);
+          const r = doc(el); await a.to(r.x + r.w * .5, r.y + Math.min(r.h * .5, 30), c); a.click();
+          ws.forEach(o => { o.on.className = 'hl'; });
+          await c.wait(320);
+        } else c.show(el);
+        put(0);
+        const [x, y] = tip(); await a.to(x, y, c); caret.style.visibility = '';
+        const total = ws.reduce((s, o) => s + o.s.length, 0);
+        await tween(Math.min(o.max || 1400, Math.max(220, total * (o.ms || 30))), k => { put(Math.round(total * k)); const [x, y] = tip(); a.set(x, y); }, c);
+        await c.wait(120); restore();
+      };
+      /* alt-drag a translucent copy of src onto dst's slot */
+      c.dup = async (a, src, dst) => {
+        if (c.rush || !vis(src) || !vis(dst)) return;
+        const r0 = doc(src), r1 = doc(dst);
+        await a.to(r0.x + r0.w * .5, r0.y + Math.min(r0.h * .5, 40), c); a.click();
+        const g = document.createElement('div'); g.className = src.parentElement.className + ' dupe';
+        g.style.cssText = `left:${r0.x}px;top:${r0.y}px;width:${r0.w}px;height:${r0.h}px;direction:${getComputedStyle(src).direction}`;
+        const cl = src.cloneNode(true); cl.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
+        g.appendChild(cl); stage.appendChild(g); c.fx.add(g);
+        const ox = a.x - r0.x, oy = a.y - r0.y;
+        await tween(Math.min(800, 300 + Math.hypot(r1.x - r0.x, r1.y - r0.y) * .4), k => {
+          const e = ease(k), x = r0.x + (r1.x - r0.x) * e, y = r0.y + (r1.y - r0.y) * e;
+          g.style.left = x + 'px'; g.style.top = y + 'px'; a.set(x + ox, y + oy);
+        }, c);
+        c.fx.delete(g); g.remove();
+      };
+      c.finish = () => {
+        if (c.state === 'done') return;
+        c.rush = true; c.state = 'done';
+        c.targets.forEach(el => el.classList.remove('bw'));
+        c.undo.forEach(f => f()); c.fx.forEach(fade); c.fx.clear();
+        if (c.after) c.after();
+      };
+      ctxs.push(c); return c;
+    }
+
+    let running = 0;
+    async function run(c) {
+      if (c.state !== 'idle') return;
+      /* free the crew: anything still building off-screen snaps to done */
+      ctxs.forEach(x => { if (x.state === 'run') { const r = x.sec.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) x.finish(); } });
+      if (!stage.classList.contains('on')) {
+        agents.forEach(a => a.set(innerWidth / 2 + scrollX + (Math.random() - .5) * 110, innerHeight * .45 + scrollY + (Math.random() - .5) * 80));
+        stage.classList.add('on');
+      }
+      c.state = 'run'; running++;
+      say(`${agents.length} وكلاء يبنون الآن · ${c.label[0]}`, `${agents.length} agents building · ${c.label[1]}`);
+      const t = setTimeout(c.finish, 30000);
+      try { await c.plan(c); } catch (_) {}
+      clearTimeout(t); c.finish(); running--;
+      if (ctxs.every(x => x.state === 'done')) done();
+      else if (!running) say('مرّر لأسفل، الطاقم جاهز', 'Scroll on, the crew is ready');
+    }
+    function done() {
+      pill.classList.add('done');
+      say(`بُني مباشرةً بواسطة ${agents.length} وكلاء`, `Built live by ${agents.length} agents`);
+      setTimeout(() => { pill.classList.add('gone'); stage.classList.add('off'); }, 2600);
+    }
+    $('.crew-skip', pill).addEventListener('click', () => { ctxs.forEach(c => c.finish()); done(); });
+    document.getElementById('lang').addEventListener('click', () => ctxs.forEach(c => c.state === 'run' && c.finish()));
+
+    /* ---- section plans: every group of repeated components is one agent's job — it builds the first,
+       then makes each next one as a copy of the previous and edits it ---- */
+    const hero = $('#home');
+    {
+      const c = ctx(hero, ['الواجهة', 'Hero']);
+      const logo = $('.logo'), links = $$('.nav a'), tools = [$('#lang'), $('.talk')], giant = $('#giant');
+      const hello = $('.hello', hero), name = $('.name', hero), role = $('.role', hero), lede = $('.lede', hero);
+      const ctas = $$('.cta-row .btn', hero), loc = $('.loc', hero), portrait = $('#portrait'), stats = $$('.stat', hero);
+      c.hide(logo, links, tools, giant, hello, name, role, lede, ctas, loc, portrait, stats);
+      c.plan = async () => {
+        await c.wait(900);
+        await Promise.all([
+          c.with(A(0), async a => {
+            await c.guides(a);
+            await c.frame(a, giant, 'PORTFOLIO', 500); await c.type(a, giant, { ms: 80 });
+            await c.series(a, stats, async s => { await c.frame(a, s, 'Stat', 400); await c.type(a, s); }, c.retype(a));
+          }),
+          c.with(A(1), async a => {
+            await c.type(a, logo, { ms: 45 });
+            await c.series(a, links, l => c.type(a, l, { ms: 40 }), c.retype(a, { ms: 40 }));
+            await c.series(a, tools, async t => { await c.frame(a, t, 'Button', 300); await c.type(a, t, { ms: 40 }); }, c.retype(a, { ms: 40 }));
+          }),
+          c.with(A(2), async a => {
+            await c.frame(a, portrait, 'Frame · Portrait', 600); await c.image(a, portrait, 'portrait.webp');
+            await c.series(a, ctas, async b => { await c.frame(a, b, 'Button', 300); await c.type(a, b, { ms: 40 }); }, c.retype(a, { ms: 35 }));
+            await c.type(a, loc, { ms: 14 });
+          }),
+          c.with(A(3), async a => {
+            await c.wait(400);
+            await c.type(a, hello, { ms: 50 }); await c.type(a, name, { ms: 60 }); await c.type(a, role); await c.type(a, lede, { ms: 9 });
+          })
+        ]);
+      };
+    }
+    {
+      const sec = $('#work'), c = ctx(sec, ['الأعمال', 'Work']);
+      const eb = $('.eyebrow', sec), h2 = $('h2', sec), arrows = $$('.arrows button', sec), rail = $('#rail'), cards = $$('.card', rail);
+      const shot = k => $('.shot', k), meta = k => $('.meta', k), file = k => $('img', k).getAttribute('src').split('/').pop();
+      c.hide(eb, h2, arrows, cards.map(k => [shot(k), meta(k)]));
+      c.plan = async () => {
+        const rr = rail.getBoundingClientRect();
+        const shown = cards.filter(k => { const r = k.getBoundingClientRect(); return r.left >= rr.left - 2 && r.right <= rr.right + 2; }).slice(0, 4);
+        if (!shown.length) shown.push(cards[0]);
+        await Promise.all([
+          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 55 }); }),
+          c.with(A(1), a => c.series(a, arrows, async b => { await c.frame(a, b, 'Icon button', 300); c.show(b, 'bin'); }, async b => c.show(b))),
+          c.with(A(2), a => c.series(a, shown,
+            async k => { await c.frame(a, k, 'Card / 01', 500); await c.image(a, shot(k), file(k)); await c.type(a, meta(k)); },
+            async (k, prev) => {
+              const back = c.borrow(shot(k), shot(prev)); c.show(shot(k));
+              await c.type(a, meta(k), { from: meta(prev), ms: 22 });
+              await c.image(a, shot(k), file(k), back);
+            }))
+        ]);
+      };
+    }
+    {
+      const sec = $('.part'), c = ctx(sec, ['الشركاء', 'Clients']);
+      const label = $('.label', sec), track = $('.track', sec), cos = $$('.co', sec), mq = $('.marquee', sec);
+      c.hide(label, cos);
+      c.after = () => { track.style.animationPlayState = ''; };
+      c.plan = async () => {
+        track.style.animationPlayState = 'paused';
+        const m = mq.getBoundingClientRect();
+        const inView = cos.filter(k => { const r = k.getBoundingClientRect(); return r.left >= m.left && r.right <= m.right; });
+        await Promise.all([
+          c.with(A(0), a => c.type(a, label, { ms: 30 })),
+          c.with(A(1), a => c.series(a, inView, async k => { await c.frame(a, k, 'Logo', 300); await c.type(a, k, { ms: 45 }); }, c.retype(a, { ms: 40 })))
+        ]);
+      };
+    }
+    {
+      const sec = $('#impact'), c = ctx(sec, ['الأثر', 'Impact']);
+      const eb = $('.eyebrow', sec), h2 = $('h2', sec), laurel = $('.laurel', sec), under = $('.under', sec), desc = $('.desc', sec), rows = $$('.list li', sec);
+      c.hide(eb, h2, laurel, under, desc, rows);
+      c.plan = async () => {
+        await Promise.all([
+          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 60 }); }),
+          c.with(A(1), async a => {
+            await c.frame(a, laurel, 'Badge', 500); c.show(laurel, 'bin'); countUp($('[data-count]', laurel));
+            await c.type(a, under, { ms: 30 }); await c.type(a, desc, { ms: 12 });
+          }),
+          c.with(A(2), a => c.series(a, rows, async r => { await c.frame(a, r, 'Row / 01', 400); await c.type(a, r, { ms: 22 }); }, c.retype(a, { ms: 16 })))
+        ]);
+      };
+    }
+    {
+      const sec = $('#process'), c = ctx(sec, ['من الهيكل للواقع', 'Wire to real']);
+      const eb = $('.eyebrow', sec), h2 = $('h2', sec), p = $('p:not(.eyebrow)', sec), cmp = $('#compare'), range = $('#cmp');
+      c.hide(eb, h2, p, cmp);
+      c.after = () => cmp.style.setProperty('--pos', range.value + '%');
+      c.plan = async () => {
+        await Promise.all([
+          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 60 }); await c.type(a, p, { ms: 12 }); }),
+          c.with(A(1), async a => {
+            cmp.style.setProperty('--pos', '100%');
+            await c.frame(a, cmp, 'HR System / Wireframe', 500); await c.image(a, cmp, 'wireframe.webp');
+            if (c.rush) return;
+            const r = doc(cmp), at = v => [r.x + r.w * v / 100, r.y + r.h / 2];
+            await a.to(...at(100), c); a.click();
+            const slide = (from, to, ms) => tween(ms, k => { const v = from + (to - from) * ease(k); cmp.style.setProperty('--pos', v + '%'); a.set(...at(v)); }, c);
+            await slide(100, 18, 1100); await slide(18, +range.value, 700);
+          })
+        ]);
+      };
+    }
+    {
+      const sec = $('#about'), c = ctx(sec, ['عني', 'About']);
+      const eb = $('.eyebrow', sec), h2 = $('h2', sec), intro = $('.intro', sec), h3s = $$('.blk h3', sec);
+      const eduB = $$('.edu b', sec), eduP = $$('.edu p', sec), chips = $$('.chips span', sec), steps = $$('.steps li', sec), quote = $('.quote', sec);
+      const qp = $('p', quote), cite = $('cite', quote);
+      c.hide(eb, h2, intro, h3s, eduB, eduP, chips, steps, quote, qp, cite);
+      c.plan = async () => {
+        await Promise.all([
+          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 50 }); await c.type(a, intro, { ms: 10 }); }),
+          c.with(A(1), async a => {
+            await c.type(a, h3s[0], { ms: 35 });
+            for (const b of eduB) { await c.type(a, b, { ms: 30 }); const p = b.parentElement.querySelector('p'); if (p) await c.type(a, p, { ms: 14 }); }
+            await c.series(a, chips, async k => { await c.frame(a, k, 'Chip', 300); await c.type(a, k, { ms: 30 }); }, c.retype(a, { ms: 25 }));
+          }),
+          c.with(A(2), async a => {
+            await c.type(a, h3s[1], { ms: 35 });
+            await c.series(a, steps, async s => { await c.frame(a, s, 'Step', 400); await c.type(a, s, { ms: 16 }); }, c.retype(a, { ms: 14 }));
+          }),
+          c.with(A(3), async a => { await c.frame(a, quote, 'Quote', 500); c.show(quote, 'wipe'); await c.type(a, qp, { ms: 18 }); await c.type(a, cite, { ms: 40 }); })
+        ]);
+      };
+    }
+    {
+      const sec = $('#journey'), c = ctx(sec, ['الرحلة', 'Journey']);
+      const eb = $('.eyebrow', sec), h2 = $('h2', sec), jobs = $$('.job', sec), h3s = $$('.side h3', sec), tl = $$('.tools span', sec), sectors = $$('.sectors li', sec);
+      const icon = t => $('img', t).alt.toLowerCase() + '.svg';
+      c.hide(eb, h2, jobs, h3s, tl, sectors);
+      c.plan = async () => {
+        await Promise.all([
+          c.with(A(0), async a => { await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 55 }); }),
+          c.with(A(1), a => c.series(a, jobs,
+            async j => { await c.frame(a, j, 'Role / 01', 400); await c.type(a, j, { ms: 9, max: 1600 }); },
+            async (j, prev) => { c.show(j); await c.type(a, $('button', j), { from: $('button', prev), ms: 20 }); })),
+          c.with(A(2), async a => {
+            await c.type(a, h3s[0], { ms: 35 });
+            await c.series(a, tl, async t => { await c.frame(a, t, 'Icon', 300); await c.image(a, t, icon(t)); },
+              async (t, prev) => { const back = c.borrow(t, prev); c.show(t); await c.image(a, t, icon(t), back); });
+            await c.type(a, h3s[1], { ms: 35 });
+            await c.series(a, sectors, s => c.type(a, s, { ms: 20 }), c.retype(a, { ms: 18 }));
+          })
+        ]);
+      };
+    }
+    {
+      const sec = $('#contact'), c = ctx(sec, ['تواصل', 'Contact']);
+      const eb = $('.eyebrow', sec), h2 = $('h2', sec), pitch = $('.pitch', sec), btn = $('.btn', sec), ways = $$('.ways li', sec);
+      const poster = $('#poster'), pd = $('.display', poster), foot = $$('footer .wrap > span');
+      c.hide(eb, h2, pitch, btn, ways, poster, pd, foot);
+      c.plan = async () => {
+        await Promise.all([
+          c.with(A(0), async a => {
+            await c.guides(a); await c.type(a, eb, { ms: 25 }); await c.type(a, h2, { ms: 60 }); await c.type(a, pitch, { ms: 14 });
+            await c.frame(a, btn, 'Button', 300); await c.type(a, btn, { ms: 35 });
+          }),
+          c.with(A(1), a => c.series(a, ways, async w => { await c.frame(a, w, 'Link / Email', 400); await c.type(a, w, { ms: 20 }); }, c.retype(a, { ms: 16 }))),
+          c.with(A(2), async a => { await c.frame(a, poster, 'Poster', 500); c.show(poster, 'wipe'); await c.type(a, pd, { ms: 50 }); }),
+          c.with(A(3), async a => { for (const f of foot) await c.type(a, f, { ms: 16 }); })
+        ]);
+        /* finale: once the whole page is up, the crew circles the poster */
+        if (c.rush || !ctxs.every(x => x === c || x.state === 'done') || !vis(poster)) return;
+        const r = doc(poster), cx = r.x + r.w / 2, cy = r.y + r.h / 2, R = Math.min(r.w, r.h) * .32;
+        await Promise.all(agents.map((ag, i) => c.with(ag, async a => {
+          const t0 = i / agents.length * Math.PI * 2;
+          await a.to(cx + Math.cos(t0) * R, cy + Math.sin(t0) * R, c);
+          await tween(1600, k => { const t = t0 + ease(k) * Math.PI * 2; a.set(cx + Math.cos(t) * R, cy + Math.sin(t) * R); }, c);
+        })));
+      };
+    }
+
+    root.classList.add('ready');
+    const go = () => {
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const c = ctxs.find(x => x.sec === e.target); io.unobserve(e.target); if (c) run(c);
+      }), { rootMargin: '0px 0px -25% 0px' });
+      ctxs.forEach(c => io.observe(c.sec));
+    };
+    Promise.race([document.fonts ? document.fonts.ready : null, new Promise(r => setTimeout(r, 900))]).then(go);
+  }
+})();
+</script>
+</body>
+</html>
